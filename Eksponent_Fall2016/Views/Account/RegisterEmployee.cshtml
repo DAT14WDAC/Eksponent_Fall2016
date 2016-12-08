@@ -32,7 +32,13 @@
     <div class="form-group">
         @Html.LabelFor(m => m.Firstname, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            @Html.PasswordFor(m => m.Lastname, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Profileimage, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Profileimage, new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">
