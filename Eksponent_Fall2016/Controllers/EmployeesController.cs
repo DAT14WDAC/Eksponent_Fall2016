@@ -10,107 +10,112 @@ using Eksponent_Fall2016.Models;
 
 namespace Eksponent_Fall2016.Controllers
 {
-    public class CompaniesController : Controller
+    public class EmployeesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Companies
+        // GET: Employees
         public ActionResult Index()
         {
-            return View(db.Companies.ToList());
+            var employees = db.Employees.Include(e => e.Company);
+            return View(employees.ToList());
         }
 
-        // GET: Companies/Details/5
+        // GET: Employees/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = db.Companies.Find(id);
-            if (company == null)
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
             {
                 return HttpNotFound();
             }
-            return View(company);
+            return View(employee);
         }
 
-        // GET: Companies/Create
+        // GET: Employees/Create
         public ActionResult Create()
         {
+            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName");
             return View();
         }
 
-        // POST: Companies/Create
+        // POST: Employees/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CompanyId,CompanyName,CompanyDescription,CompanyLogo,ApplicationUserId")] Company company)
+        public ActionResult Create([Bind(Include = "EmployeeId,Firstname,Lastname,Profileimage,CompanyId,ApplicationUserId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                db.Companies.Add(company);
+                db.Employees.Add(employee);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(company);
+            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyId);
+            return View(employee);
         }
 
-        // GET: Companies/Edit/5
+        // GET: Employees/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = db.Companies.Find(id);
-            if (company == null)
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
             {
                 return HttpNotFound();
             }
-            return View(company);
+            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyId);
+            return View(employee);
         }
 
-        // POST: Companies/Edit/5
+        // POST: Employees/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CompanyId,CompanyName,CompanyDescription,CompanyLogo,ApplicationUserId")] Company company)
+        public ActionResult Edit([Bind(Include = "EmployeeId,Firstname,Lastname,Profileimage,CompanyId,ApplicationUserId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(company).State = EntityState.Modified;
+                db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(company);
+            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyId);
+            return View(employee);
         }
 
-        // GET: Companies/Delete/5
+        // GET: Employees/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Company company = db.Companies.Find(id);
-            if (company == null)
+            Employee employee = db.Employees.Find(id);
+            if (employee == null)
             {
                 return HttpNotFound();
             }
-            return View(company);
+            return View(employee);
         }
 
-        // POST: Companies/Delete/5
+        // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Company company = db.Companies.Find(id);
-            db.Companies.Remove(company);
+            Employee employee = db.Employees.Find(id);
+            db.Employees.Remove(employee);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
