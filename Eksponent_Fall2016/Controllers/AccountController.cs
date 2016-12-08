@@ -165,6 +165,7 @@ namespace Eksponent_Fall2016.Controllers
                     c.ApplicationUserId = user.Id;
                    
                     db.Companies.Add(c);
+                    db.SaveChanges();
 
                     // to display the name in the Hello user! a claim is created
                     UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, c.CompanyName ));
