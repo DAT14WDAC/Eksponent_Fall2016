@@ -9,7 +9,7 @@ namespace Eksponent_Fall2016.Models
     {
         public int EmployeeId { get; set; }
         public string Firstname { get; set; }
-        public int test { get; set; }
+       
 
     }
 }
