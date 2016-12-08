@@ -62,7 +62,7 @@ namespace Eksponent_Fall2016.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel
+    public class RegisterViewModelCompany
     {
         [Required]
         [EmailAddress]
@@ -70,7 +70,7 @@ namespace Eksponent_Fall2016.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -79,6 +79,43 @@ namespace Eksponent_Fall2016.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Company Name")]
+        public string CompanyName { get; set; }
+        [Display(Name = "Description")]
+        public string CompanyDescription { get; set; }
+        [Display(Name = "LOGO")]
+        public string CompanyLogo { get; set; }
+
+
+    }
+
+    public class RegisterViewModelEmployee
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 4)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+
+        [Display(Name = "First Name")]
+        public string Firstname { get; set; }
+        [Display(Name = "Last Name")]
+        public string Lastname { get; set; }
+        [Display(Name = "Profile Image")]
+        public string Profileimage { get; set; }
+
     }
 
     public class ResetPasswordViewModel

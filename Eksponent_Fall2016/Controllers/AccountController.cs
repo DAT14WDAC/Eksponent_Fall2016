@@ -147,7 +147,57 @@ namespace Eksponent_Fall2016.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModelCompany model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email};
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    var roleresult = UserManager.AddToRole(user.Id, "Admin");
+
+                    ApplicationDbContext db = new ApplicationDbContext();
+                    Company c = new Company();
+                    c.CompanyName = model.CompanyName;
+                    c.CompanyDescription = model.CompanyDescription;
+                    c.CompanyLogo = model.CompanyLogo;
+                    c.ApplicationUserId = user.Id;
+                   
+                    db.Companies.Add(c);
+
+                    // to display the name in the Hello user! a claim is created
+                    UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, c.CompanyName ));
+
+                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                   
+                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                    // Send an email with this link
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+                    return RedirectToAction("Index", "Home");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        }
+
+        // GET: /Account/Register
+        [AllowAnonymous]
+        public ActionResult RegisterEmployee()
+        {
+            return View();
+        }
+
+        // POST: /Account/Register
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterEmployee(RegisterViewModelEmployee model)
         {
             if (ModelState.IsValid)
             {
@@ -155,8 +205,20 @@ namespace Eksponent_Fall2016.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    var roleresult = UserManager.AddToRole(user.Id, "Employee");
+
+                    ApplicationDbContext db = new ApplicationDbContext();
+                    Employee e = new Employee();
+                    e.Firstname = model.Firstname;
+                    e.Lastname = model.Lastname;
+                    e.Profileimage = model.Profileimage;
+                    e.ApplicationUserId = user.Id;
+                    db.Employees.Add(e);
+
+                    // to display the name in the Hello user! a claim is created
+                    UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, e.Firstname + " " +e.Lastname));
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

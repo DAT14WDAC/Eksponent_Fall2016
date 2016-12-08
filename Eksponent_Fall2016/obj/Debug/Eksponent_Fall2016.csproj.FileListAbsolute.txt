@@ -80,3 +80,6 @@ C:\Users\DEA\Documents\Visual Studio 2015\Projects\Eksponent_Fall2016\Eksponent_
 C:\Users\DEA\Documents\Visual Studio 2015\Projects\Eksponent_Fall2016\Eksponent_Fall2016\Eksponent_Fall2016\obj\Debug\Eksponent_Fall2016.csprojResolveAssemblyReference.cache
 C:\Users\DEA\Documents\Visual Studio 2015\Projects\Eksponent_Fall2016\Eksponent_Fall2016\Eksponent_Fall2016\obj\Debug\Eksponent_Fall2016.dll
 C:\Users\DEA\Documents\Visual Studio 2015\Projects\Eksponent_Fall2016\Eksponent_Fall2016\Eksponent_Fall2016\obj\Debug\Eksponent_Fall2016.pdb
+C:\Users\DEA\Documents\Visual Studio 2015\Projects\Eksponent_Fall2016\Eksponent_Fall2016\Eksponent_Fall2016\obj\Debug\Eksponent_Fall2016.Migrations.InitialCreate.resources
+C:\Users\DEA\Documents\Visual Studio 2015\Projects\Eksponent_Fall2016\Eksponent_Fall2016\Eksponent_Fall2016\obj\Debug\Eksponent_Fall2016.csproj.GenerateResource.Cache
+C:\Users\DEA\Documents\Visual Studio 2015\Projects\Eksponent_Fall2016\Eksponent_Fall2016\Eksponent_Fall2016\obj\Debug\Eksponent_Fall2016.Migrations.alot.resources

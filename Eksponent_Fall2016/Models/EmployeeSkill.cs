@@ -7,7 +7,7 @@ namespace Eksponent_Fall2016.Models
 {
     public class EmployeeSkill
     {
-        public int EmployeeSkillsId { get; set; }
+        public int EmployeeSkillId { get; set; }
         public int Level { get; set; }
         public int SkillId { get; set; }
         public int EmployeeId { get; set; }
