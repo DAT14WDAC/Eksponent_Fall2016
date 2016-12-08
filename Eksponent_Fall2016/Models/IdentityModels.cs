@@ -29,5 +29,10 @@ namespace Eksponent_Fall2016.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<EmployeeSkill> EmployeesSkills { get; set;}
     }
 }

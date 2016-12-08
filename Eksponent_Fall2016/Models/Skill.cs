@@ -12,5 +12,8 @@ namespace Eksponent_Fall2016.Models
         public int CompanyId { get; set; }
 
         public virtual Company Company { get; set; }
+
+        public virtual ICollection<Employee> IEmployee { get; set; }
+        public virtual ICollection<EmployeeSkill> IEmployeeSkill { get; set; }
     }
 }
