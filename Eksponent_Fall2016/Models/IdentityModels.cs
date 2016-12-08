@@ -34,5 +34,7 @@ namespace Eksponent_Fall2016.Models
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<EmployeeSkill> EmployeesSkills { get; set;}
+
+        public System.Data.Entity.DbSet<Eksponent_Fall2016.Models.SkillFocus> SkillFocus { get; set; }
     }
 }

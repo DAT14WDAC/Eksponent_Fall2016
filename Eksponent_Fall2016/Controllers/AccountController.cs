@@ -137,7 +137,7 @@ namespace Eksponent_Fall2016.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult RegisterCompany()
         {
             return View();
         }
@@ -147,7 +147,7 @@ namespace Eksponent_Fall2016.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModelCompany model)
+        public async Task<ActionResult> RegisterCompany(RegisterViewModelCompany model)
         {
             if (ModelState.IsValid)
             {
