@@ -10,15 +10,9 @@
 <div>
     <h4>Skill</h4>
     <hr />
+    <input type="hidden" id="CompanyId" name="CompanyId" value="@ViewBag.CompanyId" />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Company.CompanyName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Company.CompanyName)
-        </dd>
-
+        
         <dt>
             @Html.DisplayNameFor(model => model.Skillname)
         </dt>

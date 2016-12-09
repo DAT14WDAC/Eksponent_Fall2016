@@ -28,6 +28,7 @@ namespace Eksponent_Fall2016.Migrations
                 var roleResult = roleManager.Create(new IdentityRole(roleAdmin));
                 
             }
+            //Create Role Employee if it does not exist
             if (!roleManager.RoleExists(roleUser))
             {
                 var roleResult = roleManager.Create(new IdentityRole(roleUser));

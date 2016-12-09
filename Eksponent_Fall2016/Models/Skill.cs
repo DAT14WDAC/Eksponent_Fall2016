@@ -11,8 +11,10 @@ namespace Eksponent_Fall2016.Models
     {
         [Key]
         public int SkillId { get; set; }
+        [Display(Name = "Skill Name")]
         public string Skillname { get; set; }
-      
+        [Display(Name ="Skill Description")]
+        public string Skilldescription { get; set; }
         public int CompanyId { get; set; }
 
         public virtual Company Company { get; set; }

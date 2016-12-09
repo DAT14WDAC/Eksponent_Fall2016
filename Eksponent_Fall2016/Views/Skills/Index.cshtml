@@ -4,11 +4,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Skills Index</h2>
 
 <p>
     @Html.ActionLink("Create New Skill", "Create") |
-    @Html.ActionLink("Back to Company List", "Index", "Companies")
+    @Html.ActionLink("Back to Company Profile", "Index", "Companies")
 </p>
 <table class="table">
     <tr>
@@ -17,6 +17,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Skillname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Skilldescription)
         </th>
         <th></th>
     </tr>
@@ -28,6 +31,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Skillname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Skilldescription)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.SkillId }) |

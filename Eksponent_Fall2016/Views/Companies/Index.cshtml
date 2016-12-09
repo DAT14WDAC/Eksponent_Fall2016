@@ -1,14 +1,19 @@
-﻿@model IEnumerable<Eksponent_Fall2016.Models.Company>
+﻿@model Eksponent_Fall2016.Models.Company
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>YOUR PROFILE</h2>
 
+<link href="~/Content/Custom.css" rel="stylesheet" />
 <p>
     @Html.ActionLink("Create Set of Skills", "Create")
 </p>
+<div id="hello"></div>
+<div><a id="joinGroup" myAttrJoin =" 0">Press here to create your work group!</a></div>
+<div><button id="leaveGroup">Leave group</button></div>
+
 <table class="table">
     <tr>
         <th>
@@ -20,32 +25,79 @@
         <th>
             @Html.DisplayNameFor(model => model.CompanyLogo)
         </th>
-        @*<th>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
-        </th>*@
+        <th>
+           Skills
+        </th>
         <th></th>
     </tr>
-
-@foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.CompanyName)
+            @Html.DisplayFor(modelItem => modelItem.CompanyName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CompanyDescription)
+            @Html.DisplayFor(modelItem => modelItem.CompanyDescription)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CompanyLogo)
+            @Html.DisplayFor(modelItem => modelItem.CompanyLogo)
         </td>
-        @*<td>
-            @Html.DisplayFor(modelItem => item.ApplicationUserId)
-        </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CompanyId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CompanyId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CompanyId })
+           @foreach (var i in Model.ISkill)
+           {
+            <p>@Html.DisplayFor(modelItem => @i.Skillname)</p>
+           }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=Model.CompanyId }) |
+            @Html.ActionLink("Details", "Details", new { id=Model.CompanyId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=Model.CompanyId })
         </td>
     </tr>
-}
 
 </table>
+@section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+
+        var myHub = $.connection.myHub;
+
+        myHub.client.hello = function (data) {
+            $("#hello").append("<div>Hello <strong>"+data.Name+" </strong> here are all your group connections -- With id:" + data.CId+"</div>");
+        }
+
+        myHub.client.message = function (message) {
+            alert(message);
+        }
+
+        $.connection.hub.start().done(function () {
+            myHub.server.hello();
+            });
+
+        $("#joinGroup").click(function () {
+            var pressed = $(this).attr("myAttrJoin");
+
+            if (pressed == 0) {
+                myHub.server.joinGroup("@Model.CompanyName");
+                console.log("join");
+                $(this).hide();
+                $(this).attr("myAttrJoin",1);
+            }
+
+        });
+
+        $("#leaveGroup").click(function () {
+            var pressed = $("#joinGroup").attr("myAttrJoin");
+
+            if (pressed == 1) {
+                $("#joinGroup").show();
+                $("#joinGroup").attr("myAttrJoin",0);
+            }
+            myHub.server.leaveGroup("@Model.CompanyName");
+            console.log("join");
+
+        });
+
+    </script>
+}
+
+

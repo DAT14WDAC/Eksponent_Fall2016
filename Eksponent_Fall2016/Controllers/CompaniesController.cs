@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Eksponent_Fall2016.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Eksponent_Fall2016.Controllers
 {
@@ -18,7 +20,16 @@ namespace Eksponent_Fall2016.Controllers
         // GET: Companies
         public ActionResult Index()
         {
-            return View(db.Companies.ToList());
+            //return View(db.Companies.ToList());
+
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            return View(company);
         }
 
         // GET: Companies/Details/5

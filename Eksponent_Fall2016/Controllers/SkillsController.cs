@@ -7,17 +7,27 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Eksponent_Fall2016.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Eksponent_Fall2016.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SkillsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Skills
+        [Authorize(Roles = "Admin, Employee")]
         public ActionResult Index()
         {
-            var skills = db.Skills.Include(s => s.Company);
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            var skills = db.Skills.Include(s => s.Company).Where(x => x.CompanyId == company.CompanyId);
             return View(skills.ToList());
         }
 
@@ -39,7 +49,14 @@ namespace Eksponent_Fall2016.Controllers
         // GET: Skills/Create
         public ActionResult Create()
         {
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName");
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            ViewBag.CompanyId = company.CompanyId;
+
             return View();
         }
 
@@ -48,7 +65,7 @@ namespace Eksponent_Fall2016.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SkillId,Skillname,CompanyId")] Skill skill)
+        public ActionResult Create([Bind(Include = "SkillId,Skillname,,CompanyId,Skilldescription")] Skill skill)
         {
             if (ModelState.IsValid)
             {
@@ -73,7 +90,13 @@ namespace Eksponent_Fall2016.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyDescription", skill.CompanyId);
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            ViewBag.CompanyId = company.CompanyId;
             return View(skill);
         }
 
@@ -82,7 +105,7 @@ namespace Eksponent_Fall2016.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SkillId,Skillname,CompanyId")] Skill skill)
+        public ActionResult Edit([Bind(Include = "SkillId,Skillname,CompanyId,Skilldescription")] Skill skill)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +113,13 @@ namespace Eksponent_Fall2016.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyDescription", skill.CompanyId);
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            ViewBag.CompanyId = company.CompanyId;
             return View(skill);
         }
 

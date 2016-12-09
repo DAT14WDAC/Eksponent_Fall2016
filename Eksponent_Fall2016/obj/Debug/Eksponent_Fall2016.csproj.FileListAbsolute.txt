@@ -168,3 +168,7 @@ C:\Users\DEA\Source\Repos\Eksponent_Fall2016\Eksponent_Fall2016\obj\Debug\Ekspon
 C:\Users\DEA\Source\Repos\Eksponent_Fall2016\Eksponent_Fall2016\obj\Debug\Eksponent_Fall2016.csproj.GenerateResource.Cache
 C:\Users\DEA\Source\Repos\Eksponent_Fall2016\Eksponent_Fall2016\obj\Debug\Eksponent_Fall2016.dll
 C:\Users\DEA\Source\Repos\Eksponent_Fall2016\Eksponent_Fall2016\obj\Debug\Eksponent_Fall2016.pdb
+C:\Users\DEA\Source\Repos\Eksponent_Fall2016\Eksponent_Fall2016\bin\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\DEA\Source\Repos\Eksponent_Fall2016\Eksponent_Fall2016\bin\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\DEA\Source\Repos\Eksponent_Fall2016\Eksponent_Fall2016\bin\Microsoft.AspNet.SignalR.Core.xml
+C:\Users\DEA\Source\Repos\Eksponent_Fall2016\Eksponent_Fall2016\bin\Microsoft.AspNet.SignalR.SystemWeb.xml
