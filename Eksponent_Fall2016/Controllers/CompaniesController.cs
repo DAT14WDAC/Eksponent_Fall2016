@@ -10,6 +10,7 @@ using Eksponent_Fall2016.Models;
 
 namespace Eksponent_Fall2016.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CompaniesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -38,7 +39,8 @@ namespace Eksponent_Fall2016.Controllers
         // GET: Companies/Create
         public ActionResult Create()
         {
-            return View();
+            return RedirectToAction("Create","Skills");
+            //return View();
         }
 
         // POST: Companies/Create

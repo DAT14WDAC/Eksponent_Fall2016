@@ -39,7 +39,7 @@ namespace Eksponent_Fall2016.Controllers
         // GET: Skills/Create
         public ActionResult Create()
         {
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyDescription");
+            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace Eksponent_Fall2016.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyDescription", skill.CompanyId);
+            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", skill.CompanyId);
             return View(skill);
         }
 
