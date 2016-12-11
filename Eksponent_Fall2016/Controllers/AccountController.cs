@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Eksponent_Fall2016.Models;
+using System.Collections.Generic;
 
 namespace Eksponent_Fall2016.Controllers
 {
@@ -17,6 +18,8 @@ namespace Eksponent_Fall2016.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private ApplicationDbContext db = new ApplicationDbContext();
+
 
         public AccountController()
         {
@@ -192,7 +195,18 @@ namespace Eksponent_Fall2016.Controllers
         [AllowAnonymous]
         public ActionResult RegisterEmployee()
         {
-            return View();
+            var list = new List<Company>();
+            list = db.Companies.ToList();
+            
+            var model = new RegisterViewModelEmployee
+            {
+                CompanyList = list.Select(a => new SelectListItem
+                {
+                    Text = a.CompanyName,
+                    Value = a.CompanyId.ToString()
+                })
+            };
+            return View(model);
         }
 
         // POST: /Account/Register
@@ -201,6 +215,7 @@ namespace Eksponent_Fall2016.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegisterEmployee(RegisterViewModelEmployee model)
         {
+         
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -214,9 +229,11 @@ namespace Eksponent_Fall2016.Controllers
                     e.Firstname = model.Firstname;
                     e.Lastname = model.Lastname;
                     e.Profileimage = model.Profileimage;
+                    e.CompanyId = model.CompanyId;
                     e.ApplicationUserId = user.Id;
+                    e.Company = db.Companies.Find(model.CompanyId);
                     db.Employees.Add(e);
-
+                    db.SaveChanges();
                     // to display the name in the Hello user! a claim is created
                     UserManager.AddClaim(user.Id, new Claim(ClaimTypes.GivenName, e.Firstname + " " +e.Lastname));
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
@@ -227,7 +244,7 @@ namespace Eksponent_Fall2016.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Employees");
                 }
                 AddErrors(result);
             }

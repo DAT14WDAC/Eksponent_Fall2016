@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace Eksponent_Fall2016.Models
 {
@@ -77,7 +78,7 @@ namespace Eksponent_Fall2016.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         [Display(Name = "Company Name")]
@@ -105,7 +106,7 @@ namespace Eksponent_Fall2016.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
 
@@ -115,6 +116,8 @@ namespace Eksponent_Fall2016.Models
         public string Lastname { get; set; }
         [Display(Name = "Profile Image")]
         public string Profileimage { get; set; }
+        public int CompanyId { get; set; }
+        public IEnumerable<SelectListItem> CompanyList { get; set; }
 
     }
 
@@ -133,10 +136,11 @@ namespace Eksponent_Fall2016.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [System.Web.Mvc.Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
+      
     }
 
     public class ForgotPasswordViewModel

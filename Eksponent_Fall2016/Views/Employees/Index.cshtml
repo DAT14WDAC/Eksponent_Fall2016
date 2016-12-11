@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Eksponent_Fall2016.Models.Employee>
+﻿@model Eksponent_Fall2016.Models.Employee
 
 @{
     ViewBag.Title = "Index";
@@ -23,35 +23,29 @@
         <th>
             @Html.DisplayNameFor(model => model.Profileimage)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
-        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Company.CompanyName)
+            @Html.DisplayFor(modelItem => Model.Company.CompanyName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Firstname)
+            @Html.DisplayFor(modelItem => Model.Firstname)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Lastname)
+            @Html.DisplayFor(modelItem => Model.Lastname)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Profileimage)
+            @Html.DisplayFor(modelItem => Model.Profileimage)
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUserId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EmployeeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeId })
+            @*@Html.ActionLink("Edit", "Edit", new { id=Model.EmployeeId }) |
+            @Html.ActionLink("Details", "Details", new { id=Model.EmployeeId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=Model.EmployeeId })*@
         </td>
     </tr>
-}
+
 
 </table>
