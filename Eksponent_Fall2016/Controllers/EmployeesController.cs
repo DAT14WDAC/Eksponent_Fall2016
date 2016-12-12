@@ -18,13 +18,18 @@ namespace Eksponent_Fall2016.Controllers
 
         // GET: Employees
         public ActionResult Index()
-        {
-            
+        {    
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db)); 
             var currentUser = userManager.FindById(User.Identity.GetUserId());
             var employee = db.Employees.Where(i => i.ApplicationUserId == currentUser.Id).FirstOrDefault();
             return View(employee);
         }
+
+        public ActionResult EmployeeSkills(int? id)
+        {
+           return RedirectToAction("EmployeeSkills", "Skills", new { id = id });
+        }
+
 
         // GET: Employees/Details/5
         public ActionResult Details(int? id)

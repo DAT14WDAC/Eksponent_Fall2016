@@ -231,6 +231,7 @@
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\EmployeeSkill.cs" />
+    <Compile Include="Models\EmployeeSkillViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Skill.cs" />
@@ -326,6 +327,7 @@
     <Content Include="Views\Companies\Details.cshtml" />
     <Content Include="Views\Companies\Edit.cshtml" />
     <Content Include="Views\Companies\Index.cshtml" />
+    <Content Include="Views\Skills\EmployeeSkills.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

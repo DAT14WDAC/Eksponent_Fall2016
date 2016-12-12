@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Eksponent_Fall2016.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Eksponent_Fall2016.Controllers
 {
@@ -39,9 +41,23 @@ namespace Eksponent_Fall2016.Controllers
         // GET: EmployeeSkills/Create
         public ActionResult Create()
         {
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "Firstname");
-            ViewBag.SkillId = new SelectList(db.Skills, "SkillId", "Skillname");
-            return View();
+
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            Employee e = db.Employees.Where(i => i.ApplicationUserId == currentUser.Id).FirstOrDefault();
+            var list = new List<Skill>();
+            list = db.Skills.Where(x => x.CompanyId == e.CompanyId).ToList();
+            var model = new EmployeeSkillViewModel
+            {
+                SkillList = list.Select(a => new SelectListItem
+                {
+                    Text = a.Skillname,
+                    Value = a.SkillId.ToString()
+                })
+              
+            };
+           
+            return View(model);
         }
 
         // POST: EmployeeSkills/Create
@@ -49,18 +65,24 @@ namespace Eksponent_Fall2016.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EmployeeSkillId,Level,SkillId,EmployeeId")] EmployeeSkill employeeSkill)
+        public ActionResult Create([Bind(Include = "EmployeeSkillId,Level,SkillId,EmployeeId")] EmployeeSkillViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.EmployeesSkills.Add(employeeSkill);
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                var currentUser = userManager.FindById(User.Identity.GetUserId());
+                Employee employee = db.Employees.Where(i => i.ApplicationUserId == currentUser.Id).FirstOrDefault();
+                EmployeeSkill e = new EmployeeSkill();
+                e.EmployeeId = employee.EmployeeId;
+                e.Level = model.Level;
+                e.SkillId = model.SkillId;
+                employee.IEmployeeSkill.Add(e);
+                db.EmployeesSkills.Add(e);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "Firstname", employeeSkill.EmployeeId);
-            ViewBag.SkillId = new SelectList(db.Skills, "SkillId", "Skillname", employeeSkill.SkillId);
-            return View(employeeSkill);
+            return View(model);
         }
 
         // GET: EmployeeSkills/Edit/5

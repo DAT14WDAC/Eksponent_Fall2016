@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Eksponent_Fall2016.Controllers
 {
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public class SkillsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -30,7 +30,24 @@ namespace Eksponent_Fall2016.Controllers
             var skills = db.Skills.Include(s => s.Company).Where(x => x.CompanyId == company.CompanyId);
             return View(skills.ToList());
         }
+     //   [Authorize(Roles = "Employee")]
+        public ActionResult EmployeeSkills(int? id)
+        {
+       
+            Company company = db.Companies.Where(x => x.CompanyId == id).FirstOrDefault();
+            var skills = db.Skills.Where(x => x.CompanyId == company.CompanyId).ToList();
+            ViewBag.Company = company.CompanyName; 
+            return View(skills);
+        }
+        public ActionResult AddSkill()
+        {
 
+            return RedirectToAction("Create", "EmployeeSkills");
+        }
+        public ActionResult FocusSkill()
+        {
+            return RedirectToAction("Create", "SkillFocus");
+        }
         // GET: Skills/Details/5
         public ActionResult Details(int? id)
         {

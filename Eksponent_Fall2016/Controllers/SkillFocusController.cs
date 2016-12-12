@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Eksponent_Fall2016.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Eksponent_Fall2016.Controllers
 {
@@ -53,6 +55,14 @@ namespace Eksponent_Fall2016.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                var currentUser = userManager.FindById(User.Identity.GetUserId());
+                Employee employee = db.Employees.Where(i => i.ApplicationUserId == currentUser.Id).FirstOrDefault();
+                skillFocus.EmployeeId = employee.EmployeeId;
+                skillFocus.Startdate = DateTime.Now;
+                skillFocus.Employee = employee;
+                skillFocus.Skill = db.Skills.Find(skillFocus.SkillId);
+                employee.ISkillFocus.Add(skillFocus);
                 db.SkillFocus.Add(skillFocus);
                 db.SaveChanges();
                 return RedirectToAction("Index");

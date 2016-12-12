@@ -4,48 +4,47 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Company.CompanyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Firstname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lastname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Profileimage)
-        </th>
-        <th></th>
-    </tr>
-
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Company.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Lastname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.Profileimage)
-        </td>
-
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=Model.EmployeeId }) |
-            @Html.ActionLink("Details", "Details", new { id=Model.EmployeeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=Model.EmployeeId })*@
-        </td>
-    </tr>
+<h2>Profile Page</h2>
 
 
-</table>
+
+<div>
+    Firstname:
+    @Html.DisplayFor(modelItem => Model.Firstname)
+</div>
+<div>
+    Lastname:
+    @Html.DisplayFor(modelItem => Model.Lastname)
+</div>
+<div>
+    Profileimage:
+    @Html.DisplayFor(modelItem => Model.Profileimage)
+</div>
+<div>
+    Company:
+    @Html.DisplayFor(modelItem => Model.Company.CompanyName)
+</div>
+<div>
+    <div>@Html.ActionLink("Skills at my company", "EmployeeSkills", new { id = Model.Company.CompanyId })</div>
+    Skills I have:
+    @foreach (var skill in Model.IEmployeeSkill)
+    {
+        <div>Skill Name: @Html.DisplayFor(modelItem => skill.Skill.Skillname)</div>
+        <div>Skill Description: @Html.DisplayFor(modelItem => skill.Skill.Skilldescription) </div>
+    }
+</div>
+<div>
+    My Skill focus:
+    @foreach (var skill in Model.ISkillFocus)
+    {
+
+        <div>Skill Name: @Html.DisplayFor(modelItem => skill.Skill.Skillname)</div>
+        <div>Skill Description: @Html.DisplayFor(modelItem => skill.Skill.Skilldescription) </div>
+        <div>Time Started: @Html.DisplayFor(modelItem => skill.Startdate)</div>
+    }
+</div>
+
+@*@Html.ActionLink("Edit", "Edit", new { id=Model.EmployeeId }) |
+    @Html.ActionLink("Details", "Details", new { id=Model.EmployeeId }) |
+    @Html.ActionLink("Delete", "Delete", new { id=Model.EmployeeId })*@
+
