@@ -23,7 +23,7 @@
                     @if (User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Company Profile", "Index", "Companies")</li>
-                        <li>@Html.ActionLink("Employees Profile", "Index", "Employees")</li>
+                        <li>@Html.ActionLink("Employees Profile", "GetEmployees", "Companies")</li>
 
 
                     }

@@ -128,6 +128,19 @@ namespace Eksponent_Fall2016.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Companies/Delete/5
+        public ActionResult GetEmployees()
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+
+            Company company = db.Companies.Where(i => i.ApplicationUserId == currentUser.Id).FirstOrDefault();
+            List<Employee> e = new List<Employee>();
+
+            e = company.IEmployee.ToList();
+            return View(e);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -136,5 +149,6 @@ namespace Eksponent_Fall2016.Controllers
             }
             base.Dispose(disposing);
         }
+
     }
 }
