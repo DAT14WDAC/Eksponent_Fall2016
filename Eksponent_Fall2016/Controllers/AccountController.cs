@@ -150,7 +150,7 @@ namespace Eksponent_Fall2016.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterCompany(RegisterViewModelCompany model)
+        public async Task<ActionResult> RegisterCompany(RegisterViewModelCompany model, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -165,7 +165,9 @@ namespace Eksponent_Fall2016.Controllers
                     Company c = new Company();
                     c.CompanyName = model.CompanyName;
                     c.CompanyDescription = model.CompanyDescription;
-                    c.CompanyLogo = model.CompanyLogo;
+                    // c.CompanyLogo = model.CompanyLogo;
+                    var path = Server != null ? Server.MapPath("~") : "";
+                    c.SaveLogo(image, path, "/ProfileImages/");
                     c.ApplicationUserId = user.Id;
                    
                     db.Companies.Add(c);
@@ -213,7 +215,7 @@ namespace Eksponent_Fall2016.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> RegisterEmployee(RegisterViewModelEmployee model)
+        public async Task<ActionResult> RegisterEmployee(RegisterViewModelEmployee model, HttpPostedFileBase image)
         {
          
             if (ModelState.IsValid)
@@ -228,7 +230,9 @@ namespace Eksponent_Fall2016.Controllers
                     Employee e = new Employee();
                     e.Firstname = model.Firstname;
                     e.Lastname = model.Lastname;
-                    e.Profileimage = model.Profileimage;
+                    //e.Profileimage = model.Profileimage;
+                    var path = Server != null ? Server.MapPath("~") : "";
+                    e.SaveImage(image, path, "/ProfileImages/");
                     e.CompanyId = model.CompanyId;
                     e.ApplicationUserId = user.Id;
                     e.Company = db.Companies.Find(model.CompanyId);

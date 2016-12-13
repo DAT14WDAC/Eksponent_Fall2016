@@ -35,6 +35,7 @@ namespace Eksponent_Fall2016.Controllers
         // GET: Companies/Details/5
         public ActionResult Details(int? id)
         {
+            ViewBag.skills = new SelectList(db.Skills, "CompanyId", "Skillname");
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -91,10 +92,13 @@ namespace Eksponent_Fall2016.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CompanyId,CompanyName,CompanyDescription,CompanyLogo,ApplicationUserId")] Company company)
+        public ActionResult Edit([Bind(Include = "CompanyId,CompanyName,CompanyDescription,CompanyLogo,ApplicationUserId")] Company company,
+            HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
+                var path = Server != null ? Server.MapPath("~") : "";
+                company.SaveLogo(image, path, "/ProfileImages/");
                 db.Entry(company).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Eksponent_Fall2016.Helper;
+using System;
+using System.Collections.Generic;
+using System.Web;
 
 namespace Eksponent_Fall2016.Models
 {
@@ -12,6 +15,21 @@ namespace Eksponent_Fall2016.Models
 
         public virtual ICollection<Employee> IEmployee { get; set; }
         public virtual ICollection<Skill> ISkill { get; set; }
+
+        public void SaveLogo(HttpPostedFileBase image,
+        String serverPath, String pathToFile)
+        {
+            if (image == null) return;
+            if (!String.IsNullOrEmpty(this.CompanyLogo))
+            {
+                // delete the old picture before adding new picture 
+                ImageModel.DeleteFile(serverPath + CompanyLogo);
+            }
+            //ImageModel 
+            Guid guid = Guid.NewGuid();
+            ImageModel.ResizeAndSave(serverPath + pathToFile, guid.ToString(), image.InputStream, 200);
+            CompanyLogo = pathToFile + guid.ToString() + ".jpg";
+        }
 
     }
 }

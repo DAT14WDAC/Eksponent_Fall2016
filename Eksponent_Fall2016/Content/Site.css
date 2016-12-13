@@ -14,7 +14,19 @@
 */
 .dl-horizontal dt {
     white-space: normal;
+    text-align: left;
 }
+
+dt::after {
+    content: ': ';
+}
+dd{
+  /*text-align: left;*/
+  display: block;
+  margin-left: 0px;
+  
+}
+
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
@@ -22,3 +34,28 @@ select,
 textarea {
     max-width: 280px;
 }
+.container{
+    /*background-color:white;*/
+}
+#lblLeft{
+    background-color:#808080;
+    height:250px;
+    padding-top:5px;
+    width:250px;
+    padding-left:15px;
+    color:white;
+    margin-left:15px;
+}
+.profileImage{
+
+    background-color:#808080;
+    background-position: 0 0,10px 10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    width:234px;
+    height:253px;
+
+
+}
+
+
