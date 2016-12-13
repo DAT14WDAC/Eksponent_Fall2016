@@ -132,6 +132,69 @@ namespace Eksponent_Fall2016.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Companies/get sills list
+        public ActionResult GetSkills()
+        {
+
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            //get cuurent company from db
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            var list = new List<Skill>();
+            list = db.Skills.Where(x => x.CompanyId == company.CompanyId).ToList();
+
+            var model = new EmployeeSkillViewModel
+            {
+                SkillList = list.Select(a => new SelectListItem
+                {
+                    Text = a.Skillname,
+                    Value = a.SkillId.ToString(),
+                })
+            };
+
+            return View(model);
+        }
+
+        // POST: Companies/fetch list skills
+        [HttpPost]
+        public ActionResult GetEmployeeSkills(IEnumerable<int> skillIds)
+        {
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            //get the current company from db
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+            //get all the employees of a company
+            var employee = db.Employees.Where(x => x.CompanyId == company.CompanyId).ToList();
+           
+            var model = new EmployeeSkillViewModel();
+
+            if (ModelState.IsValid)
+            {
+                foreach (var em in employee)
+                {
+                    foreach (var skill in skillIds)
+                    {
+                        model = new EmployeeSkillViewModel
+                        {
+                            //get the employees skills 
+                            eSkillList = db.EmployeesSkills
+                            .Include(e => e.Employee)
+                            .Where(x => x.EmployeeId == em.EmployeeId)
+                            .Include(e => e.Skill)
+                            .Where(x => x.SkillId == skill)
+
+                        };
+
+                    }
+                }
+            }
+            return View(model);
+        }
 
         protected override void Dispose(bool disposing)
         {

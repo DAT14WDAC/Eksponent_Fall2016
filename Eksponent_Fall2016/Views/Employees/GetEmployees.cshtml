@@ -23,9 +23,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Profileimage)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
-        </th>
         <th></th>
     </tr>
 
@@ -43,14 +40,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.Profileimage)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUserId)
-        </td>
-        <td>
+        @*<td>
             @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId }) |
             @Html.ActionLink("Details", "Details", new { id=item.EmployeeId }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeId })
-        </td>
+        </td>*@
     </tr>
 }
 
