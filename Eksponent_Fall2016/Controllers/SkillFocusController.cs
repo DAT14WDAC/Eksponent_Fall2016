@@ -41,9 +41,36 @@ namespace Eksponent_Fall2016.Controllers
         // GET: SkillFocus/Create
         public ActionResult Create()
         {
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "Firstname");
-            ViewBag.SkillId = new SelectList(db.Skills, "SkillId", "Skillname");
-            return View();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            Employee e = db.Employees.Where(i => i.ApplicationUserId == currentUser.Id).FirstOrDefault();
+            var list = new List<Skill>();
+            list = db.Skills.Where(x => x.CompanyId == e.CompanyId).ToList();
+            var list2 = new List<SkillFocus>();
+            foreach (var item in e.ISkillFocus)
+            {
+                list2.Add(item);
+            }
+            for (int i = 0; i < list.Count(); i++)
+            {
+                for (int j = 0; j < list2.Count(); j++)
+                {
+                    if (list[i].SkillId == list2[j].SkillId)
+                    {
+                        list.RemoveAt(i);
+                    }
+                }
+            }
+            var model = new SkillFocusViewModel
+            {
+                SkillList = list.Select(a => new SelectListItem
+                {
+                    Text = a.Skillname,
+                    Value = a.SkillId.ToString()
+                })
+
+            };
+            return View(model);
         }
 
         // POST: SkillFocus/Create

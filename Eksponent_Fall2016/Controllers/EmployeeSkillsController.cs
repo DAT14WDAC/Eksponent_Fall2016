@@ -47,6 +47,21 @@ namespace Eksponent_Fall2016.Controllers
             Employee e = db.Employees.Where(i => i.ApplicationUserId == currentUser.Id).FirstOrDefault();
             var list = new List<Skill>();
             list = db.Skills.Where(x => x.CompanyId == e.CompanyId).ToList();
+            var list2 = new List<EmployeeSkill>();
+            foreach (var item in e.IEmployeeSkill)
+            {
+                list2.Add(item);
+            }
+            for(int i = 0; i < list.Count(); i++)
+            {
+                for (int j = 0; j < list2.Count(); j++)
+                {
+              if (list[i].SkillId == list2[j].SkillId)
+                    {
+                        list.RemoveAt(i);
+                    }
+                }
+            }
             var model = new EmployeeSkillViewModel
             {
                 SkillList = list.Select(a => new SelectListItem
