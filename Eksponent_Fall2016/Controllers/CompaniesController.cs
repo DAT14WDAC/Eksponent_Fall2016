@@ -167,21 +167,18 @@ namespace Eksponent_Fall2016.Controllers
             //get the current company from db
             Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
 
-            var model = new EmployeeSkillViewModel();
-            model.eSList = new List<EmployeeSkill>();
+            var eSList = new List<EmployeeSkill>();
 
             if (ModelState.IsValid)
             {
                 foreach (var skill in skillIds)
                 {
-                    model.eSkillList = db.EmployeesSkills.Include(e => e.Employee).Include(e => e.Skill)
+                    var result = db.EmployeesSkills.Include(e => e.Employee).Include(e => e.Skill)
                    .Where(x => x.SkillId == skill).ToList();
-                    //var result = db.EmployeesSkills.Include(e => e.Employee).Include(e => e.Skill)
-                   //.Where(x => x.SkillId == skill).ToList();
-                    //model.eSkillList.Concat(result);
+                    eSList.AddRange(result);
                 }
             }
-            return View(model.eSkillList);
+            return View(eSList);
         }
 
         // GET: Companies/Experience Overview
@@ -201,7 +198,7 @@ namespace Eksponent_Fall2016.Controllers
             {
                 SkillList = list.Select(a => new SelectListItem
                 {
-                    Text = a.,
+                    Text = a.Skillname,
                     Value = a.SkillId.ToString(),
                 })
             };
