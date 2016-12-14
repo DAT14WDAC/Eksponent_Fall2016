@@ -1,5 +1,4 @@
-﻿@model Eksponent_Fall2016.Models.EmployeeSkillViewModel
-@using Eksponent_Fall2016.Models
+﻿@model IEnumerable<Eksponent_Fall2016.Models.EmployeeSkill>
 
 @{
     ViewBag.Title = "GetEmployeeSkills";
@@ -7,26 +6,24 @@
 
 <h2>GetEmployeeSkills</h2>
 
-@if (Model.eSkillList == null)
-{
-    <h2>Currently you have no employees register within your company</h2>
-    
-}
+<p>
+    @Html.ActionLink("Go back", "GetSkills")
+</p>
 <table class="table">
     <tr>
         <th>
-            @Html.Label("First Name")
+            @Html.DisplayNameFor(model => model.Employee.Firstname)
         </th>
         <th>
-            @Html.Label("Skill Name")
+            @Html.DisplayNameFor(model => model.Skill.Skillname)
         </th>
         <th>
-            @Html.Label("Experience Level")
+            @Html.DisplayNameFor(model => model.Level)
         </th>
         <th></th>
     </tr>
-   
-    @foreach (var item in Model.eSkillList)
+
+    @foreach (var item in Model)
     {
         <tr>
             <td>
@@ -38,11 +35,11 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Level)
             </td>
-            @*<td>
+            <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeSkillId }) |
                 @Html.ActionLink("Details", "Details", new { id = item.EmployeeSkillId }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeSkillId })
-            </td>*@
+            </td>
         </tr>
     }
 

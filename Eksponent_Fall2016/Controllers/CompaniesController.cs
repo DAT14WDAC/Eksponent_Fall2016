@@ -20,8 +20,6 @@ namespace Eksponent_Fall2016.Controllers
         // GET: Companies
         public ActionResult Index()
         {
-            //return View(db.Companies.ToList());
-
             //Fetching UserManager
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             //Get User from Database based on userId 
@@ -51,7 +49,7 @@ namespace Eksponent_Fall2016.Controllers
         // GET: Companies/Create
         public ActionResult Create()
         {
-            return RedirectToAction("Create","Skills");
+            return RedirectToAction("Create", "Skills");
             //return View();
         }
 
@@ -92,7 +90,7 @@ namespace Eksponent_Fall2016.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CompanyId,CompanyName,CompanyDescription,CompanyLogo")] Company company,
+        public ActionResult Edit([Bind(Include = "CompanyId,CompanyName,CompanyDescription,CompanyLogo,ApplicationUserId")] Company company,
             HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
@@ -132,6 +130,59 @@ namespace Eksponent_Fall2016.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: Companies/get sills list
+        public ActionResult GetSkills()
+        {
+
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            //get cuurent company from db
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            var list = new List<Skill>();
+            list = db.Skills.Where(x => x.CompanyId == company.CompanyId).ToList();
+
+            var model = new EmployeeSkillViewModel
+            {
+                SkillList = list.Select(a => new SelectListItem
+                {
+                    Text = a.Skillname,
+                    Value = a.SkillId.ToString(),
+                })
+            };
+
+            return View(model);
+        }
+
+        // POST: Companies/fetch list skills
+        [HttpPost]
+        public ActionResult GetEmployeeSkills(IEnumerable<int> skillIds)
+        {
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            //get the current company from db
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            var model = new EmployeeSkillViewModel();
+            model.eSList = new List<EmployeeSkill>();
+
+            if (ModelState.IsValid)
+            {
+                foreach (var skill in skillIds)
+                {
+                    model.eSkillList = db.EmployeesSkills.Include(e => e.Employee).Include(e => e.Skill)
+                   .Where(x => x.SkillId == skill).ToList();
+                    //var result = db.EmployeesSkills.Include(e => e.Employee).Include(e => e.Skill)
+                   //.Where(x => x.SkillId == skill).ToList();
+                    //model.eSkillList.Concat(result);
+                }
+            }
+            return View(model.eSkillList);
+        }
 
         protected override void Dispose(bool disposing)
         {
