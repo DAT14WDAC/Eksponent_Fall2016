@@ -332,6 +332,8 @@
     <Content Include="Views\Companies\Index.cshtml" />
     <Content Include="Views\Skills\EmployeeSkills.cshtml" />
     <Content Include="Views\Employees\GetEmployees.cshtml" />
+    <Content Include="Views\Companies\GetSkills.cshtml" />
+    <Content Include="Views\Companies\GetEmployeeSkills.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
