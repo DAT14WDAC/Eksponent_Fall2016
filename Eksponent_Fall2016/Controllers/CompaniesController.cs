@@ -27,7 +27,7 @@ namespace Eksponent_Fall2016.Controllers
             //Get User from Database based on userId 
             var currentUser = userManager.FindById(User.Identity.GetUserId());
 
-            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).SingleOrDefault();
 
             return View(company);
         }
@@ -92,7 +92,7 @@ namespace Eksponent_Fall2016.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CompanyId,CompanyName,CompanyDescription,CompanyLogo,ApplicationUserId")] Company company,
+        public ActionResult Edit([Bind(Include = "CompanyId,CompanyName,CompanyDescription,CompanyLogo")] Company company,
             HttpPostedFileBase image)
         {
             if (ModelState.IsValid)

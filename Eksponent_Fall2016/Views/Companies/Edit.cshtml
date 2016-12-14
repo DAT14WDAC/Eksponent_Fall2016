@@ -6,13 +6,12 @@
 <link href="~/Content/Site.css" rel="stylesheet" />
 <hr />
 <div class="container">
-    <div class="col-md-4 hidden-sm hidden-xs">
-        <img src="@Model.CompanyLogo" alt="Profile image" class="profileImage thumbnail img-responsive">
+    <div class="row">
+        <div class="col-md-4 hidden-sm hidden-xs">
+            <img src="@Model.CompanyLogo" alt="Profile image" class="CompanyLogo thumbnail img-responsive">
+        </div>
 
-    </div>
-    <div class="col-md-8" style="margin-top:40px;">
-        <div class="row">
-
+        <div class="col-md-8" style="margin-top:40px;">
             @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
@@ -21,6 +20,7 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.CompanyId)
                     @Html.HiddenFor(model => model.CompanyLogo)
+                    @Html.HiddenFor(model => model.ApplicationUserId)
                     <div class="form-group">
                         @Html.LabelFor(model => model.CompanyName, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">

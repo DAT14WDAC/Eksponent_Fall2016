@@ -1,57 +1,50 @@
 ﻿@model IEnumerable<Eksponent_Fall2016.Models.Employee>
-
 @{
     ViewBag.Title = "GetEmployees";
 }
-
-<h2>GetEmployees</h2>
-
 <p>
     @*@Html.ActionLink("Create New", "Create")*@
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Company.CompanyName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Firstname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lastname)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Profileimage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ApplicationUserId)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Company.CompanyName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Firstname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lastname)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Profileimage)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ApplicationUserId)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.EmployeeId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.EmployeeId })
-        </td>
-    </tr>
-}
+<link href="~/Content/Site.css" rel="stylesheet" />
+<div class="container" id="GetEmployee">
+    <div id="divLeft">
+        <h2>Company Employees</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="float:left; margin-top:30px;">
+            <div id="lblLeft">
+                <h3> Company</h3>
+                <p style="line-height:14px;font-size:12px;">
+                    KEA Staff is a platform designed to create a better understanding of what we know,
+                    what we can do and how we do it at KEA. KEA Staff works as a platform for the exchange
+                    of experiences between the different departments internally at KEA and across different
+                    educational institutions, nationally and internationally.
+                </p>
+            </div>
+            <div>
+                <img src="~/profileimages/images (1).jpg"
+                     style="height:250px;padding-top:40px;width:270px;padding-left:15px;" />
 
-</table>
+            </div>
+
+        </div>
+        <div class="col-md-9">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-2 col-sm-3 col-xs-4"
+                     style="padding-left: 2px !important;padding-right:2px !important; ">
+                    <a href="@Url.Action("Details", "Employees", new {id = @item.EmployeeId})">
+                        <img src="../../@item.Profileimage" class="profileImage thumbnail img-responsive">
+                        <br />
+                    </a>
+                    @Html.Label(item.Firstname + " " + item.Lastname, new { @class = "LabelStyle" })
+
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+

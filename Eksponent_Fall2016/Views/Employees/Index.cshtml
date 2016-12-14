@@ -7,66 +7,107 @@
 <div class="container-fluid">
     <p>
 
-        <div>@Html.ActionLink("Skills at my company", "EmployeeSkills", new { id = Model.Company.CompanyId })</div>
-    </p>
+        <div>
+            @Html.ActionLink("Skills at my company", "EmployeeSkills", new { id = Model.Company.CompanyId })
 
-    <div class="row">
-        <div class="col-md-3">
+    </div>
+</p>
 
-            <div>
-                <a href="@Url.Action("Edit", "Companies", new {id = Model.CompanyId})">
-                    <img style="margin-top: 10px;" src="../../@Model.Profileimage" class="profileImage thumbnail img-responsive">
-                    <br />
-                </a>
-                @*@Html.Label(company.CompanyName, new { @class = "LabelStyle" })*@
-            </div>
+<div class="row">
+    <div class="col-md-2">
 
+        <div>
+            <a href="@Url.Action("Edit", "Companies", new {id = Model.CompanyId})">
+                <img style="margin-top: 10px;" src="../../@Model.Profileimage" class="profileImage thumbnail img-responsive">
+                <br />
+            </a>
+            @*@Html.Label(company.CompanyName, new { @class = "LabelStyle" })*@
         </div>
-        <div class="col-md-9" style="margin-top:80px;">
-            <dl class="dl-horizontal" style="overflow: hidden;">
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Firstname)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Firstname)
-                </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Lastname)
-                </dt>
-                <dd>
-                    @Html.DisplayFor(model => model.Lastname)
-                </dd>
-                <dt>
-                    Company
-                </dt>
-                <dd>
-                    @Html.DisplayFor(modelItem => Model.Company.CompanyName)
-                </dd>
-                <dt>
-                    Skills I have:
-                </dt>
-                <dd>
+    </div>
+    <div class="col-md-5 col-md-5" style="margin-top:30px;">
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Firstname)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Firstname)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Lastname)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Lastname)
+            </dd>
+            <dt>
+                Company
+            </dt>
+            <dd>
+                @Html.DisplayFor(modelItem => Model.Company.CompanyName)
+            </dd>
+            <dt>
+                Skills I have
+            </dt>
+            <dd>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Skill Name
+                        </th>
+                        <th>
+                            Skill Description
+                        </th>
+                    </tr>
                     @foreach (var skill in Model.IEmployeeSkill)
                     {
-                        <div>Skill Name: @Html.DisplayFor(modelItem => skill.Skill.Skillname)</div>
-                        <div>Skill Description: @Html.DisplayFor(modelItem => skill.Skill.Skilldescription) </div>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => skill.Skill.Skillname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => skill.Skill.Skilldescription)
+                            </td>
+                        </tr>
+
                     }
-                </dd>
-                <dt>
-                    My Skill focus:
-                </dt>
-                <dd>
+                </table>
+            </dd>
+            <dt>
+                My Skill focus
+            </dt>
+            <dd>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Skill Name
+                        </th>
+                        <th>
+                            Skill Description
+                        </th>
+                        <th>
+                            Time Started
+                        </th>
+                    </tr>
                     @foreach (var skill in Model.ISkillFocus)
                     {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => skill.Skill.Skillname)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => skill.Skill.Skilldescription)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => skill.Startdate)
+                            </td>
+                        </tr>
 
-                        <div>Skill Name: @Html.DisplayFor(modelItem => skill.Skill.Skillname)</div>
-                        <div>Skill Description: @Html.DisplayFor(modelItem => skill.Skill.Skilldescription) </div>
-                        <div>Time Started: @Html.DisplayFor(modelItem => skill.Startdate)</div>
                     }
-                </dd>
+                </table>
+            </dd>
 
-            </dl>
-        </div>
+        </dl>
     </div>
+</div>
 </div>

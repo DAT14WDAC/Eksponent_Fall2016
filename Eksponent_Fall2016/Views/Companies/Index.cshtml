@@ -9,6 +9,7 @@
     <p>
 
         @Html.ActionLink("Create Set of Skills", "Create")
+       
     </p>
 
     <div id="hello"></div>
@@ -20,15 +21,16 @@
 
             <div>
                 <a href="@Url.Action("Edit", "Companies", new {id = Model.CompanyId})">
-                    <img style="margin-top: 10px;" src="../../@Model.CompanyLogo" class="profileImage thumbnail img-responsive">
-                    <br />
+                    <img style="margin-top: 10px;" src="../../@Model.CompanyLogo" class="CompanyLogo thumbnail img-responsive">
+                   @*<img src="@Model.CompanyLogo" alt="Profile image" class="profileImage thumbnail img-responsive">*@
+                     <br />
                 </a>
                 @*@Html.Label(company.CompanyName, new { @class = "LabelStyle" })*@
             </div>
 
         </div>
-        <div class="col-md-9" style="margin-top:80px;">
-            <dl class="dl-horizontal" style="overflow: hidden;">
+        <div class="col-md-9" style="margin-top:50px;">
+            <dl class="dl-horizontal">
 
                 <dt>
                     @Html.DisplayNameFor(model => model.CompanyName)

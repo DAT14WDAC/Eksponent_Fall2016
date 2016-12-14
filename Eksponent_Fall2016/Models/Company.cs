@@ -1,6 +1,7 @@
 ﻿using Eksponent_Fall2016.Helper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Web;
 
 namespace Eksponent_Fall2016.Models
@@ -9,6 +10,7 @@ namespace Eksponent_Fall2016.Models
     {
         public int CompanyId { get; set; }
         public string CompanyName { get; set; }
+        [Display(Name = "Description")]
         public string CompanyDescription { get; set; }
         public string CompanyLogo { get; set; }
         public string ApplicationUserId { get; set; }

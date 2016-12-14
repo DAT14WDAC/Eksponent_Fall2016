@@ -25,7 +25,7 @@ namespace Eksponent_Fall2016.Controllers
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             //Get User from Database based on userId 
             var currentUser = userManager.FindById(User.Identity.GetUserId());
-            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).FirstOrDefault();
 
             var skills = db.Skills.Include(s => s.Company).Where(x => x.CompanyId == company.CompanyId);
             return View(skills.ToList());
