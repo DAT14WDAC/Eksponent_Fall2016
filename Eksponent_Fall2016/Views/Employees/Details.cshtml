@@ -18,31 +18,50 @@
         <div class="row">
             <dl class="dl-horizontal">
                 <dt>
-                    @Html.DisplayNameFor(model => model.Company.CompanyName)
+                    @Html.LabelFor(model => model.Company.CompanyName,"Company Name")
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.Company.CompanyName)
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(model => model.Firstname)
+                    @Html.LabelFor(model => model.Firstname, "First Name")
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.Firstname)
                 </dd>
                 <dt>
-                    @Html.DisplayNameFor(model => model.Lastname)
+                    @Html.LabelFor(model => model.Lastname, "Last Name")
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.Lastname)
                 </dd>
-               
-            </dl>
+                <dt>
+                    My Skill focus:
+                </dt>
+                <dd>
+                    <table class="table">
+                        @*<tr>
+                            <th>
+                                Skill Name
+                            </th>
+                        </tr>*@
+                        @foreach (var skill in Model.ISkillFocus)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@Html.DisplayFor(modelItem => skill.Skill.Skillname)</strong>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </dd>
+
+</dl>
         </div>
     </div>
     <div class="col-md-offset-8 col-md-4">
         @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
-        @Html.ActionLink("Delete", "Delete", new { id = Model.EmployeeId })|
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Delete", "Delete", new { id = Model.EmployeeId })
     </div>
 </div>
 

@@ -184,6 +184,38 @@ namespace Eksponent_Fall2016.Controllers
             return View(model.eSkillList);
         }
 
+        // GET: Companies/Experience Overview
+        public ActionResult ExperienceOverview()
+        {
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            //get cuurent company from db
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            var list = new List<Skill>();
+            list = db.Skills.Where(x => x.CompanyId == company.CompanyId).ToList();
+
+            var model = new EmployeeSkillViewModel
+            {
+                SkillList = list.Select(a => new SelectListItem
+                {
+                    Text = a.,
+                    Value = a.SkillId.ToString(),
+                })
+            };
+            return View();
+        }
+
+        // Post: Companies/Experience Overview
+        [HttpPost]
+        public ActionResult ExperienceOverview(int id)
+        {
+           
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

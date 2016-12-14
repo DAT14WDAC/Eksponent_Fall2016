@@ -98,7 +98,7 @@ namespace Eksponent_Fall2016.Controllers
             {
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("GetEmployees");
             }
             ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "CompanyName", employee.CompanyId);
             return View(employee);
@@ -127,7 +127,7 @@ namespace Eksponent_Fall2016.Controllers
             Employee employee = db.Employees.Find(id);
             db.Employees.Remove(employee);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("GetEmployees");
         }
 
         // GET: Employees/GET LIST/

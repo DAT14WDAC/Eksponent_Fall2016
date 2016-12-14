@@ -8,9 +8,9 @@
 <div class="container-fluid">
     <p>
 
-        @Html.ActionLink("Create Set of Skills", "Create")|
-        @Html.ActionLink("Roles Within the Company", "GetSkills")
-       
+        @Html.ActionLink("Create Set of Skills", "Create") |
+        @Html.ActionLink("Roles Within the Company", "GetSkills") |
+        @Html.ActionLink("Experience Overview", "")
     </p>
 
     <div id="hello"></div>
@@ -34,7 +34,7 @@
             <dl class="dl-horizontal">
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.CompanyName)
+                    @Html.LabelFor(model => model.CompanyName, "Company Name")
                 </dt>
                 <dd>
                     @Html.DisplayFor(model => model.CompanyName)
