@@ -92,7 +92,7 @@ namespace Eksponent_Fall2016.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,Firstname,Lastname,Profileimage,CompanyId")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId,Firstname,Lastname,Profileimage,CompanyId,ApplicationUserId")] Employee employee)
         {
             if (ModelState.IsValid)
             {
