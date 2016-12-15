@@ -20,28 +20,43 @@
                 <div class="form-horizontal">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.EmployeeId)
-                    @Html.HiddenFor(model => model.CompanyId)
                     @Html.HiddenFor(model => model.Profileimage)
                     @Html.HiddenFor(model => model.ApplicationUserId)
+                    @Html.HiddenFor(model => model.CompanyId)
+
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Company.CompanyName, "Company Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Company.CompanyName, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Company.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Company.CompanyName, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Firstname, "First Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Firstname, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Firstname, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Lastname, "Last Name", htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model.Lastname, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Lastname, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CompanyId, "CompanyId", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("CompanyId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CompanyId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ApplicationUserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.ApplicationUserId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ApplicationUserId, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
@@ -51,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <input name="image" type="file" />
-                        @Html.ValidationMessageFor(model => model.Profileimage)
+                        @Html.ValidationMessageFor(model => model.Company)
                     </div>
                 </div>
             }
