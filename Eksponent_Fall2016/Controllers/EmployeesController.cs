@@ -92,10 +92,13 @@ namespace Eksponent_Fall2016.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,Firstname,Lastname,Profileimage,CompanyId,ApplicationUserId")] Employee employee)
+        public ActionResult Edit([Bind(Include = "EmployeeId,Firstname,Lastname,Profileimage,CompanyId,ApplicationUserId")] Employee employee,
+             HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
+                var path = Server != null ? Server.MapPath("~") : "";
+                employee.SaveImage(image, path, "/ProfileImages/");
                 db.Entry(employee).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("GetEmployees");

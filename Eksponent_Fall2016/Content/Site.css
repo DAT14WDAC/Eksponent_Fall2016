@@ -71,8 +71,8 @@ textarea {
     background-position: 0 0,10px 10px;
     padding-top:5px;
     padding-bottom:5px;
-    width:200px;
-    height:220px;
+    width:170px;
+    height:160px;
     margin-top:30px;
 
 
@@ -107,4 +107,6 @@ textarea {
    .table-bordered>thead>tr>td, .table-bordered>thead>tr>th{
      background-color: #78909C;
      color: white;
-    
+    } 
+
+
