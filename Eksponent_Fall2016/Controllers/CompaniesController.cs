@@ -193,24 +193,15 @@ namespace Eksponent_Fall2016.Controllers
         // GET: Companies/Experience Overview
         public ActionResult ExperienceOverview()
         {
-            //Fetching UserManager
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-            //Get User from Database based on userId 
-            var currentUser = userManager.FindById(User.Identity.GetUserId());
-            //get cuurent company from db
-            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
-           // var employee = db.Employees.Where(x => x.EmployeeId == company.CompanyId);
-
-          
-
-            //  list = db.EmployeesSkills.Where(x => x.CompanyId == company.CompanyId).ToList();
-
             var model = new EmployeeSkillViewModel
             {
                 LevelList = new List<SelectListItem>()
                 {
                         new SelectListItem{ Text="1", Value="1"},
-                        new SelectListItem{ Text="2", Value="2"}
+                        new SelectListItem{ Text="2", Value="2"},
+                        new SelectListItem{ Text="3", Value="3"},
+                        new SelectListItem{ Text="4", Value="4"},
+                        new SelectListItem{ Text="5", Value="5"}
                 }
             };
   
@@ -219,11 +210,22 @@ namespace Eksponent_Fall2016.Controllers
         }
 
         // Post: Companies/Experience Overview
-        [HttpPost]
-        public ActionResult ExperienceOverview(int id)
+       
+        [HttpPost, ActionName("ExperienceOverview")]
+        public ActionResult OverviewExperience(int radioIds)
         {
-           
-            return View();
+            //if (ModelState.IsValid)
+            //{
+                // get the employees with level and count
+                var employee = db.EmployeesSkills.Include(e => e.Employee).Where(l => l.Level == radioIds).Count();
+                var model = new EmployeeSkillViewModel
+                {
+                    Level = employee
+                };
+                return View(model);
+
+            //}
+            //return View(ViewBag.Message = "No level experience found within your company.");
         }
 
         protected override void Dispose(bool disposing)

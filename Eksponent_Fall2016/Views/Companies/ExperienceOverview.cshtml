@@ -4,14 +4,29 @@
     ViewBag.Title = "ExperienceOverview";
 }
 
-<h2>ExperienceOverview</h2>
-<div class="form-group">
-    <div class="col-sm-10">
-        @foreach (var item in Model.LevelList)
-        {
-            @Html.RadioButtonFor(model => model.LevelList, item.Value, false)
-            <label class="control-label">@item.Text</label>
-        }
-
+<h2>Experience Overview Within Your Company</h2>
+@using (Html.BeginForm())
+{
+    <div class="container">
+        <div class="form-group">
+            <div style="margin-top: 20px;">
+                @Html.Label("Choose a Level:")  &nbsp; &nbsp;
+                @foreach (var item in Model.LevelList)
+                {
+                    <label>
+                        <input id="radioIds" type="radio" value="@item.Value" name="radioIds" />
+                        @item.Text
+                        &nbsp;
+                    </label>
+                    @*@Html.RadioButtonFor(model => model.LevelList, item.Value, false)
+                    <label class="control-label">@item.Text &nbsp;</label>*@
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
     </div>
-</div>
+}

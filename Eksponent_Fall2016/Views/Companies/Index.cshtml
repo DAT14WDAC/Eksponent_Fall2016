@@ -17,18 +17,18 @@
     <div><a id="joinGroup" myAttrJoin="0">Press here to CREATE your work group!</a></div>
     <div><a id="leaveGroup">Press here to LEAVE your work group!</a></div>
 
-<div class="container-fluid" id="companyContainer">
+<div class="container" id="companyContainer">
     <div class="row">
         <div class="col-md-3">
             <div>
                 <a href="@Url.Action("Edit", "Companies", new {id = Model.CompanyId})">
-                    <img style="margin-top: 10px;" src="../../@Model.CompanyLogo" class="CompanyLogo thumbnail img-responsive">
+                    <img style="margin-top: 20px;" src="../../@Model.CompanyLogo" class="CompanyLogo thumbnail img-responsive">
                     <br />
                 </a>
             </div>
 
         </div>
-        <div class="col-md-9" style="margin-top:50px;">
+        <div class="col-md-6 col-md-3" style="margin-top:50px;">
             <dl class="dl-horizontal">
 
                 <dt>
