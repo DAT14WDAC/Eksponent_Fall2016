@@ -1,17 +1,14 @@
-﻿@model Eksponent_Fall2016.Models.EmployeeSkillViewModel
-@using Eksponent_Fall2016.Models
+﻿@model IEnumerable<Eksponent_Fall2016.Models.EmployeeSkill>
 
 @{
     ViewBag.Title = "GetEmployeeSkills";
 }
 
-<h2>GetEmployeeSkills</h2>
+<h2>Employees Skill</h2>
 
-@if (Model.eSkillList == null)
-{
-    <h2>Currently you have no employees register within your company</h2>
-    
-}
+<p>
+    @Html.ActionLink("Go back", "GetSkills")
+</p>
 <table class="table">
     <tr>
         <th>
@@ -21,16 +18,16 @@
             @Html.Label("Skill Name")
         </th>
         <th>
-            @Html.Label("Experience Level")
+            @Html.Label("Level (Years Experience)")
         </th>
         <th></th>
     </tr>
-   
-    @foreach (var item in Model.eSkillList)
+
+    @foreach (var item in Model)
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Employee.Firstname)
+                @Html.DisplayFor(modelItem => item.Employee.Firstname , new { htmlAttributes = new { @style = "text-transform:uppercase" } })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Skill.Skillname)
@@ -38,11 +35,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Level)
             </td>
-            @*<td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeSkillId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.EmployeeSkillId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeSkillId })
-            </td>*@
         </tr>
     }
 
