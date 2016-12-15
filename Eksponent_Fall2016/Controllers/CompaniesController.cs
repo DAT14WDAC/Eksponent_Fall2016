@@ -190,18 +190,21 @@ namespace Eksponent_Fall2016.Controllers
             var currentUser = userManager.FindById(User.Identity.GetUserId());
             //get cuurent company from db
             Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+            var employee = db.Employees.Where(x => x.EmployeeId == company.CompanyId);
 
-            var list = new List<Skill>();
-            list = db.Skills.Where(x => x.CompanyId == company.CompanyId).ToList();
+            var list = new List<EmployeeSkill>();
+             
+          //  list = db.EmployeesSkills.Where(x => x.CompanyId == company.CompanyId).ToList();
 
-            var model = new EmployeeSkillViewModel
-            {
-                SkillList = list.Select(a => new SelectListItem
-                {
-                    Text = a.Skillname,
-                    Value = a.SkillId.ToString(),
-                })
-            };
+            //var model = new EmployeeSkillViewModel
+            //{
+            //    SkillList = list.Select(a => new SelectListItem
+            //    {
+            //        Text = a.Skillname,
+            //        Value = a.SkillId.ToString(),
+            //    })
+            //};
+
             return View();
         }
 

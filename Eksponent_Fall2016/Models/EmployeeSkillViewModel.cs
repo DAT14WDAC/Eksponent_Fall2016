@@ -14,8 +14,7 @@ namespace Eksponent_Fall2016.Models
         public int SkillId { get; set; }
         public int EmployeeId { get; set; }
         public IEnumerable<SelectListItem> SkillList { get; set; }
-        //public IEnumerable<EmployeeSkill> eSkillList { get; set; }
-        //public ICollection<EmployeeSkill> eSList { get; set; }
-
+        public int SelectedLevel { get; set; }
+        public IEnumerable<SelectListItem> LevelList { get; set; }
     }
 }

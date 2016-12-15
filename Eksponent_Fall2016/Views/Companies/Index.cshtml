@@ -10,12 +10,12 @@
 
         @Html.ActionLink("Create Set of Skills", "Create") |
         @Html.ActionLink("Roles Within the Company", "GetSkills") |
-        @Html.ActionLink("Experience Overview", "")
+        @Html.ActionLink("Experience Overview", "ExperienceOverview")
     </p>
 
     <div id="hello"></div>
-    <div><a id="joinGroup" myAttrJoin="0">Press here to create your work group!</a></div>
-    <div><button id="leaveGroup">Leave group</button></div>
+    <div><a id="joinGroup" myAttrJoin="0">Press here to CREATE your work group!</a></div>
+    <div><a id="leaveGroup">Press here to LEAVE your work group!</a></div>
 
     <div class="row">
         <div class="col-md-3">
@@ -54,13 +54,12 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Skillname)
+                                    <strong>@Html.DisplayFor(modelItem => item.Skillname)</strong>
                                 </td>
                             </tr>
                         }
                     </table>
                 </dd>
-
             </dl>
         </div>
     </div>
@@ -92,7 +91,8 @@
                 myHub.server.joinGroup("@Model.CompanyName");
                 console.log("join");
                 $(this).hide();
-                $(this).attr("myAttrJoin",1);
+                $(this).attr("myAttrJoin", 1);
+                $("#leaveGroup").show();
             }
 
         });
@@ -102,12 +102,15 @@
 
             if (pressed == 1) {
                 $("#joinGroup").show();
-                $("#joinGroup").attr("myAttrJoin",0);
+                $("#joinGroup").attr("myAttrJoin", 0);
+                $("#leaveGroup").hide();
             }
             myHub.server.leaveGroup("@Model.CompanyName");
             console.log("join");
 
         });
+
+        $("#leaveGroup").hide();
 
     </script>
 }

@@ -1,0 +1,14 @@
+﻿@model Eksponent_Fall2016.Models.EmployeeSkillViewModel
+
+@{
+    ViewBag.Title = "ExperienceOverview";
+}
+
+<h2>ExperienceOverview</h2>
+<div class="form-group">
+    <div class="col-sm-10">
+        <div>
+            @Html.DropDownListFor(m => m.Level, Model.LevelList)
+        </div>
+    </div>
+</div>

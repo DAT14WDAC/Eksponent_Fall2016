@@ -18,7 +18,7 @@
             @Html.Label("Skill Name")
         </th>
         <th>
-            @Html.Label("Years Experience")
+            @Html.Label("Level (Years Experience)")
         </th>
         <th></th>
     </tr>
@@ -34,11 +34,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Level)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeSkillId }) |
-                @Html.ActionLink("Details", "Details", new { id = item.EmployeeSkillId }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeSkillId })
             </td>
         </tr>
     }
