@@ -60,5 +60,5 @@
     <div>
         @Html.ActionLink("Back to Company Profile", "Index")
     </div>
-    <div>@Html.ActionLink("Delete Company", "Delete")</div>
+    <div>@Html.ActionLink("Delete Company", "Delete", new { id = Model.CompanyId})</div>
 </div>

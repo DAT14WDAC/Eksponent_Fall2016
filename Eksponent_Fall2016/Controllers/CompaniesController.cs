@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Eksponent_Fall2016.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Security;
+using System.Web.Configuration;
 
 namespace Eksponent_Fall2016.Controllers
 {
@@ -124,10 +126,17 @@ namespace Eksponent_Fall2016.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+
             Company company = db.Companies.Find(id);
             db.Companies.Remove(company);
+            db.Users.Remove(currentUser);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Companies/get sills list
@@ -190,22 +199,23 @@ namespace Eksponent_Fall2016.Controllers
             var currentUser = userManager.FindById(User.Identity.GetUserId());
             //get cuurent company from db
             Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
-            var employee = db.Employees.Where(x => x.EmployeeId == company.CompanyId);
+           // var employee = db.Employees.Where(x => x.EmployeeId == company.CompanyId);
 
-            var list = new List<EmployeeSkill>();
-             
-          //  list = db.EmployeesSkills.Where(x => x.CompanyId == company.CompanyId).ToList();
+          
 
-            //var model = new EmployeeSkillViewModel
-            //{
-            //    SkillList = list.Select(a => new SelectListItem
-            //    {
-            //        Text = a.Skillname,
-            //        Value = a.SkillId.ToString(),
-            //    })
-            //};
+            //  list = db.EmployeesSkills.Where(x => x.CompanyId == company.CompanyId).ToList();
 
-            return View();
+            var model = new EmployeeSkillViewModel
+            {
+                LevelList = new List<SelectListItem>()
+                {
+                        new SelectListItem{ Text="1", Value="1"},
+                        new SelectListItem{ Text="2", Value="2"}
+                }
+            };
+  
+
+            return View(model);
         }
 
         // Post: Companies/Experience Overview
@@ -224,6 +234,7 @@ namespace Eksponent_Fall2016.Controllers
             }
             base.Dispose(disposing);
         }
-
     }
+   
+
 }

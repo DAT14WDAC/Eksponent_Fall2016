@@ -126,6 +126,8 @@ namespace Eksponent_Fall2016.Controllers
         {
             Employee employee = db.Employees.Find(id);
             db.Employees.Remove(employee);
+            var user = db.Users.Find(employee.ApplicationUserId);
+            db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("GetEmployees");
         }
