@@ -16,17 +16,15 @@
     <div id="hello"></div>
     <div><a id="joinGroup" myAttrJoin="0">Press here to CREATE your work group!</a></div>
     <div><a id="leaveGroup">Press here to LEAVE your work group!</a></div>
-<div class="container" id="companyContainer">
+
+<div class="container-fluid" id="companyContainer">
     <div class="row">
         <div class="col-md-3">
-
             <div>
                 <a href="@Url.Action("Edit", "Companies", new {id = Model.CompanyId})">
                     <img style="margin-top: 10px;" src="../../@Model.CompanyLogo" class="CompanyLogo thumbnail img-responsive">
-                    @*<img src="@Model.CompanyLogo" alt="Profile image" class="profileImage thumbnail img-responsive">*@
                     <br />
                 </a>
-                @*@Html.Label(company.CompanyName, new { @class = "LabelStyle" })*@
             </div>
 
         </div>

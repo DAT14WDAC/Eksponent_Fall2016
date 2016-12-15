@@ -7,8 +7,11 @@
 <h2>ExperienceOverview</h2>
 <div class="form-group">
     <div class="col-sm-10">
-        <div>
-            @Html.DropDownListFor(m => m.Level, Model.LevelList)
-        </div>
+        @foreach (var item in Model.LevelList)
+        {
+            @Html.RadioButtonFor(model => model.LevelList, item.Value, false)
+            <label class="control-label">@item.Text</label>
+        }
+
     </div>
 </div>

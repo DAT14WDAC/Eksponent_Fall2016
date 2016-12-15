@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Eksponent_Fall2016.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Security;
+using System.Web.Configuration;
 
 namespace Eksponent_Fall2016.Controllers
 {
@@ -20,8 +22,6 @@ namespace Eksponent_Fall2016.Controllers
         // GET: Companies
         public ActionResult Index()
         {
-            //return View(db.Companies.ToList());
-
             //Fetching UserManager
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             //Get User from Database based on userId 
@@ -51,7 +51,7 @@ namespace Eksponent_Fall2016.Controllers
         // GET: Companies/Create
         public ActionResult Create()
         {
-            return RedirectToAction("Create","Skills");
+            return RedirectToAction("Create", "Skills");
             //return View();
         }
 
@@ -126,12 +126,105 @@ namespace Eksponent_Fall2016.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+
             Company company = db.Companies.Find(id);
             db.Companies.Remove(company);
+            db.Users.Remove(currentUser);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
+        // GET: Companies/get sills list
+        public ActionResult GetSkills()
+        {
+
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            //get cuurent company from db
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            var list = new List<Skill>();
+            list = db.Skills.Where(x => x.CompanyId == company.CompanyId).ToList();
+
+            var model = new EmployeeSkillViewModel
+            {
+                SkillList = list.Select(a => new SelectListItem
+                {
+                    Text = a.Skillname,
+                    Value = a.SkillId.ToString(),
+                })
+            };
+
+            return View(model);
+        }
+
+        // POST: Companies/fetch list skills
+        [HttpPost]
+        public ActionResult GetEmployeeSkills(IEnumerable<int> skillIds)
+        {
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            //get the current company from db
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            var eSList = new List<EmployeeSkill>();
+
+            if (ModelState.IsValid)
+            {
+                foreach (var skill in skillIds)
+                {
+                    var result = db.EmployeesSkills.Include(e => e.Employee).Include(e => e.Skill)
+                   .Where(x => x.SkillId == skill).ToList();
+                    eSList.AddRange(result);
+                }
+            }
+            return View(eSList);
+        }
+
+        // GET: Companies/Experience Overview
+        public ActionResult ExperienceOverview()
+        {
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            //get cuurent company from db
+            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+           // var employee = db.Employees.Where(x => x.EmployeeId == company.CompanyId);
+
+          
+
+            //  list = db.EmployeesSkills.Where(x => x.CompanyId == company.CompanyId).ToList();
+
+            var model = new EmployeeSkillViewModel
+            {
+                LevelList = new List<SelectListItem>()
+                {
+                        new SelectListItem{ Text="1", Value="1"},
+                        new SelectListItem{ Text="2", Value="2"}
+                }
+            };
+  
+
+            return View(model);
+        }
+
+        // Post: Companies/Experience Overview
+        [HttpPost]
+        public ActionResult ExperienceOverview(int id)
+        {
+           
+            return View();
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -141,6 +234,7 @@ namespace Eksponent_Fall2016.Controllers
             }
             base.Dispose(disposing);
         }
-
     }
+   
+
 }
