@@ -58,9 +58,16 @@ namespace Eksponent_Fall2016.Controllers
             {
                 for (int j = 0; j < list2.Count(); j++)
                 {
-                    if (list[i].SkillId == list2[j].SkillId)
-                    {
+
+                    if (list[i].SkillId == list2[j].SkillId )
+                    {   
                         list.RemoveAt(i);
+                        i = 0;
+                        j = 0;
+                        if (list.Count() == 0)
+                        {
+                            break;
+                        } 
                     }
                 }
             }
@@ -72,7 +79,7 @@ namespace Eksponent_Fall2016.Controllers
                     Text = a.Skillname,
                     Value = a.SkillId.ToString()
                 }),
-                NumberOfFocus = list.Count()  
+                NumberOfFocus = list2.Count()  
 
             };
             return View(model);

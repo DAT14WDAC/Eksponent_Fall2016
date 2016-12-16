@@ -4,10 +4,15 @@
 }
 <h2>Profile Page</h2>
 <link href="~/Content/Site.css" rel="stylesheet" />
+<div id="hello"></div>
+<div><a id="joinGroup" myAttrJoin="0">Press here to JOIN your companys work group!</a></div>
+<div><a id="leaveGroup">Press here to LEAVE your work group!</a></div>
+
 <div class="container-fluid">
     <p>
         <div>
             @Html.ActionLink("Skills at my company", "EmployeeSkills", new { id = Model.Company.CompanyId })
+            @Html.ActionLink("Colleges I could learn from", "GetSkills")
     </div>
 </p>
 <div class="row">
@@ -108,3 +113,55 @@
     </div>
 </div>
 </div>
+@section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script>
+
+        var myHub = $.connection.myHub;
+
+        myHub.client.hello = function (data) {
+            $("#hello").append("<div>Hello <strong>"+data.Name+" </strong> here are all your group connections -- With id:" + data.CId+"</div>");
+        }
+
+        myHub.client.message = function (message) {
+            alert(message);
+        }
+
+        $.connection.hub.start().done(function () {
+            myHub.server.hello();
+            });
+
+        $("#joinGroup").click(function () {
+            var pressed = $(this).attr("myAttrJoin");
+
+            if (pressed == 0) {
+                myHub.server.joinGroup("@Model.Company.CompanyName");
+                console.log("join");
+                $(this).hide();
+                $(this).attr("myAttrJoin", 1);
+                $("#leaveGroup").show();
+            }
+
+        });
+
+        $("#leaveGroup").click(function () {
+            var pressed = $("#joinGroup").attr("myAttrJoin");
+
+            if (pressed == 1) {
+                $("#joinGroup").show();
+                $("#joinGroup").attr("myAttrJoin", 0);
+                $("#leaveGroup").hide();
+            }
+            myHub.server.leaveGroup("@Model.Company.CompanyName");
+            console.log("join");
+
+        });
+
+        $("#leaveGroup").hide();
+
+    </script>
+}
+
+
+

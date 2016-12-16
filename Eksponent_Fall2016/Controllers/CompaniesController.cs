@@ -233,9 +233,9 @@ namespace Eksponent_Fall2016.Controllers
                 {
                     Level = percentComplete
                 };
-                return View(model);
+                return View("Overview", model);
             }
-            return View(ViewBag.Message = "No level experience found within your company.");
+            return View("Overview", ViewBag.Message = "No level experience found within your company.");
         }
 
         protected override void Dispose(bool disposing)

@@ -62,6 +62,12 @@ namespace Eksponent_Fall2016.Controllers
               if (list[i].SkillId == list2[j].SkillId)
                     {
                         list.RemoveAt(i);
+                        i = 0;
+                        j = 0;
+                        if(list.Count() == 0)
+                        {
+                            break;
+                        }
                     }
                 }
             }

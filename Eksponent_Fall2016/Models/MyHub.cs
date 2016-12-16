@@ -12,7 +12,19 @@ namespace Eksponent_Fall2016.Models
     public class MyHub : Hub
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        public void Helloemp()
+        {
 
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(Context.User.Identity.GetUserId());
+            Employee emp = db.Employees.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            Company company = db.Companies.Find(emp.CompanyId);
+
+            Clients.Client(Context.ConnectionId).hello(new { Name = company.CompanyName, CId = Context.ConnectionId });
+        }
         public void Hello()
         { 
 
