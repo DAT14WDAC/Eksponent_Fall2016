@@ -6,4 +6,8 @@
     cursor: pointer;
     color:coral;
 }
- 
+
+body, html{
+font-family: 'Oxygen', sans-serif;
+
+}

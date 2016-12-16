@@ -88,7 +88,7 @@ namespace Eksponent_Fall2016.Controllers
                 var currentUser = userManager.FindById(User.Identity.GetUserId());
                 Employee employee = db.Employees.Where(i => i.ApplicationUserId == currentUser.Id).FirstOrDefault();
                 skillFocus.EmployeeId = employee.EmployeeId;
-                skillFocus.Startdate = DateTime.Now;
+                skillFocus.Startdate = DateTime.Today;
                 skillFocus.Enddate = skillFocus.Startdate.AddYears(1);
                 skillFocus.Employee = employee;
                 skillFocus.Skill = db.Skills.Find(skillFocus.SkillId);

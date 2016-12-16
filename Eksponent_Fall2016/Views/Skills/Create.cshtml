@@ -8,6 +8,7 @@
 
 <h2>Create</h2>
 
+
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -32,10 +33,8 @@
         </div> 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CompanyId, "Company ID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="hidden" id="CompanyId" name="CompanyId" value="@ViewBag.CompanyId"/>
-                @ViewBag.CompanyId
             </div>
         </div>
 

@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <p>
         <div>
-            @Html.ActionLink("Skills at my company", "EmployeeSkills", new { id = Model.Company.CompanyId })
+            @Html.ActionLink("Skills at my company", "EmployeeSkills", new { id = Model.Company.CompanyId }) |
             @Html.ActionLink("Colleagues I could learn from", "GetSkills")
     </div>
 </p>
@@ -20,11 +20,9 @@
     <div class="col-md-2">
 
         <div>
-            @*<a href="@Url.Action("Edit", "Companies", new {id = Model.CompanyId})">*@
                 <img style="margin-top: 10px;" src="../../@Model.Profileimage" class="profileImage thumbnail img-responsive">
                 <br />
-            @*</a>*@
-            @*@Html.Label(company.CompanyName, new { @class = "LabelStyle" })*@
+           
         </div>
 
     </div>
@@ -91,6 +89,9 @@
                         <th>
                             Time Started
                         </th>
+                        <th>
+                            End Date
+                        </th>
                     </tr>
                     @foreach (var skill in Model.ISkillFocus)
                     {
@@ -103,6 +104,9 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => skill.Startdate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => skill.Enddate)
                             </td>
                         </tr>
 
