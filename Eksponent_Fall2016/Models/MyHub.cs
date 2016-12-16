@@ -32,9 +32,9 @@ namespace Eksponent_Fall2016.Models
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             //Get User from Database based on userId 
             var currentUser = userManager.FindById(Context.User.Identity.GetUserId());
-
+            //get the company thats logged in
             Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
-
+            //show company name and its connection
             Clients.Client(Context.ConnectionId).hello(new { Name = company.CompanyName, CId = Context.ConnectionId });
         }
 

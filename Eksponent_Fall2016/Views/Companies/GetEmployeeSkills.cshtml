@@ -15,6 +15,9 @@
             @Html.Label("First Name")
         </th>
         <th>
+            @Html.Label("Last Name")
+        </th>
+        <th>
             @Html.Label("Skill Name")
         </th>
         <th>
@@ -29,6 +32,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Employee.Firstname , new { htmlAttributes = new { @style = "text-transform:uppercase" } })
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employee.Lastname, new { htmlAttributes = new { @style = "text-transform:uppercase" } })
+            </td>
+
             <td>
                 @Html.DisplayFor(modelItem => item.Skill.Skillname)
             </td>
