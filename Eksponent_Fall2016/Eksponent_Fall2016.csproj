@@ -335,7 +335,6 @@
     <Content Include="Views\Companies\GetSkills.cshtml" />
     <Content Include="Views\Companies\GetEmployeeSkills.cshtml" />
     <Content Include="Views\Companies\ExperienceOverview.cshtml" />
-    <Content Include="Views\Companies\Overview.cshtml" />
     <Content Include="Views\Companies\_PartialOverview.cshtml" />
   </ItemGroup>
   <ItemGroup>

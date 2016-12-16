@@ -208,40 +208,12 @@ namespace Eksponent_Fall2016.Controllers
             return View(model);
         }
 
-        // Post: Companies/Experience Overview 
-        [HttpPost, ActionName("ExperienceOverview")]
-        public ActionResult ExperienceOverview(int radioIds)
-        {
-            
-            //Fetching UserManager
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-            //Get User from Database based on userId 
-            var currentUser = userManager.FindById(User.Identity.GetUserId());
-            //get the current company from db
-            Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
-            //get the total employee nr for company
-            var totalEmployees = db.Employees.Where(e => e.CompanyId == company.CompanyId).Count();
-            // get the employees nr with level and count
-            var countEmployee = db.EmployeesSkills.Include(e => e.Employee).Where(l => l.Level == radioIds).Count();
-            // calculate the percentage represented by countEmployee ratio
-            int percentComplete = (int)Math.Round((double)(100 * countEmployee) / totalEmployees);
-
-            if (ModelState.IsValid && countEmployee != 0)
-            {
-                var model = new EmployeeSkillViewModel
-                {
-                    Level = percentComplete
-                };
-                return View(model); //using the Overview.cshtml
-            }
-            return View(ViewBag.Message = "No level experience found within your company.");
-        }
 
         [HttpPost]
         public ActionResult Overview(int radioIds)
         {
 
-            //Fetching UserManager
+            //Fetching UserManager 
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             //Get User from Database based on userId 
             var currentUser = userManager.FindById(User.Identity.GetUserId());
@@ -254,7 +226,7 @@ namespace Eksponent_Fall2016.Controllers
             // calculate the percentage represented by countEmployee ratio
             int percentComplete = (int)Math.Round((double)(100 * countEmployee) / totalEmployees);
 
-            if (ModelState.IsValid && countEmployee != 0)
+            if (ModelState.IsValid )
             {
                 var model = new EmployeeSkillViewModel
                 {
