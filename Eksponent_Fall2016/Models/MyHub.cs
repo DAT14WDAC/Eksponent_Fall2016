@@ -43,6 +43,7 @@ namespace Eksponent_Fall2016.Models
 
             Groups.Add(Context.ConnectionId, groupName);
             Clients.Caller.message("WELCOME TO -- " + groupName + " -- WORK GROUP!");
+            //Clients.Clients(Context.ConnectionId).hello(new { Name = company.CompanyName, CId = Context.ConnectionId });
         }
 
         public void LeaveGroup(string groupName)

@@ -4,6 +4,7 @@
 }
 <h2>Profile Page</h2>
 <link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/Custom.css" rel="stylesheet" />
 <div id="hello"></div>
 <div><a id="joinGroup" myAttrJoin="0">Press here to JOIN your companys work group!</a></div>
 <div><a id="leaveGroup">Press here to LEAVE your work group!</a></div>
@@ -19,10 +20,10 @@
     <div class="col-md-2">
 
         <div>
-            <a href="@Url.Action("Edit", "Companies", new {id = Model.CompanyId})">
+            @*<a href="@Url.Action("Edit", "Companies", new {id = Model.CompanyId})">*@
                 <img style="margin-top: 10px;" src="../../@Model.Profileimage" class="profileImage thumbnail img-responsive">
                 <br />
-            </a>
+            @*</a>*@
             @*@Html.Label(company.CompanyName, new { @class = "LabelStyle" })*@
         </div>
 
