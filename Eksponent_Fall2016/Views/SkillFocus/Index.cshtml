@@ -12,14 +12,15 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Employee.Firstname)
+            @Html.Label("First Name")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Skill.Skillname)
+            @Html.Label("Skill Name")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Startdate)
+            @Html.Label("Start Date")
         </th>
+        <th>@Html.Label("End Date")</th>
         <th></th>
     </tr>
 
@@ -33,6 +34,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Startdate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Enddate)
         </td>
         <td>
      

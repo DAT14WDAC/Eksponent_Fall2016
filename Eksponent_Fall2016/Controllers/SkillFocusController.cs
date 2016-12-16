@@ -46,29 +46,19 @@ namespace Eksponent_Fall2016.Controllers
         {
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             var currentUser = userManager.FindById(User.Identity.GetUserId());
-            Employee e = db.Employees.Where(i => i.ApplicationUserId == currentUser.Id).FirstOrDefault();
+            Employee e = db.Employees.Where(i => i.ApplicationUserId == currentUser.Id).Include(i => i.ISkillFocus).FirstOrDefault();
             var list = new List<Skill>();
             list = db.Skills.Where(x => x.CompanyId == e.CompanyId).ToList();
-            var list2 = new List<SkillFocus>();
+            var list2 = new List<Skill>();
             foreach (var item in e.ISkillFocus)
             {
-                list2.Add(item);
+                list2.Add(item.Skill);
             }
-            for (int i = 0; i < list.Count(); i++)
+            for (int i = list.Count - 1; i >= 0; i--)
             {
-                for (int j = 0; j < list2.Count(); j++)
+                if (list2.Contains(list[i]))
                 {
-
-                    if (list[i].SkillId == list2[j].SkillId )
-                    {   
-                        list.RemoveAt(i);
-                        i = 0;
-                        j = 0;
-                        if (list.Count() == 0)
-                        {
-                            break;
-                        } 
-                    }
+                    list.RemoveAt(i);
                 }
             }
 
@@ -99,6 +89,7 @@ namespace Eksponent_Fall2016.Controllers
                 Employee employee = db.Employees.Where(i => i.ApplicationUserId == currentUser.Id).FirstOrDefault();
                 skillFocus.EmployeeId = employee.EmployeeId;
                 skillFocus.Startdate = DateTime.Now;
+                skillFocus.Enddate = skillFocus.Startdate.AddYears(1);
                 skillFocus.Employee = employee;
                 skillFocus.Skill = db.Skills.Find(skillFocus.SkillId);
                 employee.ISkillFocus.Add(skillFocus);
