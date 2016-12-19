@@ -2,27 +2,27 @@
 @{
     ViewBag.Title = "Index";
 }
+
 <h2>YOUR PROFILE</h2>
 <link href="~/Content/Custom.css" rel="stylesheet" />
 <link href="~/Content/Site.css" rel="stylesheet" />
 
-    <p>
+<p>
+    @Html.ActionLink("Create Set of Skills", "Create") |
+    @Html.ActionLink("Roles Within the Company", "GetSkills") |
+    @Html.ActionLink("Experience Overview", "Graph")
+</p>
 
-        @Html.ActionLink("Create Set of Skills", "Create") |
-        @Html.ActionLink("Roles Within the Company", "GetSkills") |
-        @Html.ActionLink("Experience Overview", "ExperienceOverview")
-    </p>
-
-    <div id="hello"></div>
-    <div><a id="joinGroup" myAttrJoin="0">Press here to CREATE your work group!</a></div>
-    <div><a id="leaveGroup">Press here to LEAVE your work group!</a></div>
+<div id="hello"></div>
+<div><a id="joinGroup" myAttrJoin="0">Press here to CREATE your work group!</a></div>
+<div><a id="leaveGroup">Press here to LEAVE your work group!</a></div>
 
 <div class="container" id="companyContainer">
     <div class="row">
         <div class="col-md-3">
             <div>
                 <a href="@Url.Action("Edit", "Companies", new {id = Model.CompanyId})">
-                    <img src="../../@Model.CompanyLogo" class="CompanyLogo thumbnail img-responsive">
+                    <img style="margin-top: 20px;" src="../../@Model.CompanyLogo" class="CompanyLogo thumbnail img-responsive">
                     <br />
                 </a>
             </div>

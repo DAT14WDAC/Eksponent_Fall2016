@@ -186,44 +186,47 @@ namespace Eksponent_Fall2016.Controllers
                    .Where(x => x.SkillId == skill).ToList();
                     eSList.AddRange(result);
                 }
+                ViewBag.skillIds = skillIds;
             }
             return View(eSList);
         }
-
+      
         // GET: Companies/Experience Overview
-        public ActionResult ExperienceOverview()
+        [HttpGet]
+        public ActionResult Graph()
         {
-            //Fetching UserManager
+            return View("_FetchGraphData");
+        }
+
+        
+        public ActionResult FetchGraphData()
+        {
+            //Fetching UserManager 
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             //Get User from Database based on userId 
             var currentUser = userManager.FindById(User.Identity.GetUserId());
-            //get cuurent company from db
+            //get the current company from db
             Company company = db.Companies.Where(x => x.ApplicationUserId == currentUser.Id).Single();
-           // var employee = db.Employees.Where(x => x.EmployeeId == company.CompanyId);
 
-          
+            //get the total employee nr for company
+            var totalEmployees = db.Employees.Where(e => e.CompanyId == company.CompanyId).Count();
 
-            //  list = db.EmployeesSkills.Where(x => x.CompanyId == company.CompanyId).ToList();
+            //all the skills that the company has
+            var skills = db.Skills.Include(s => s.Company).Where(x => x.CompanyId == company.CompanyId).ToList();
 
-            var model = new EmployeeSkillViewModel
+            var amountList = new List<int>();
+            var skillList = new List<string>();
+
+            foreach (var skill in skills)
             {
-                LevelList = new List<SelectListItem>()
-                {
-                        new SelectListItem{ Text="1", Value="1"},
-                        new SelectListItem{ Text="2", Value="2"}
-                }
-            };
-  
-
-            return View(model);
-        }
-
-        // Post: Companies/Experience Overview
-        [HttpPost]
-        public ActionResult ExperienceOverview(int id)
-        {
-           
-            return View();
+                //get all the employee with same skill and level
+                var employeeCount = db.EmployeesSkills.Include(e => e.Employee).Include(s => s.Skill)
+                        .Where(l => l.Employee.CompanyId == company.CompanyId && l.SkillId == skill.SkillId).Count();
+                 
+                amountList.Add(employeeCount);
+                skillList.Add(skill.Skillname);
+            }
+            return Json(new { stats = amountList, skills = skillList , totalEmployees = totalEmployees }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
@@ -235,6 +238,5 @@ namespace Eksponent_Fall2016.Controllers
             base.Dispose(disposing);
         }
     }
-   
 
 }

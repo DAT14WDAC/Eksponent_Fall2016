@@ -156,6 +156,55 @@ namespace Eksponent_Fall2016.Controllers
             }
             base.Dispose(disposing);
         }
+            public ActionResult GetSkills()
+        {
 
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            
+            Employee e = db.Employees.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            Company company = db.Companies.Find(e.CompanyId);
+
+            var list = new List<Skill>();
+            list = db.Skills.Where(x => x.CompanyId == company.CompanyId).ToList();
+
+            var model = new EmployeeSkillViewModel
+            {
+                SkillList = list.Select(a => new SelectListItem
+                {
+                    Text = a.Skillname,
+                    Value = a.SkillId.ToString(),
+                })
+            };
+
+            return View(model);
+        }
+        [HttpPost]
+        public ActionResult GetEmployeeSkills(IEnumerable<int> skillIds)
+        {
+            //Fetching UserManager
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            //Get User from Database based on userId 
+            var currentUser = userManager.FindById(User.Identity.GetUserId());
+            Employee emp = db.Employees.Where(x => x.ApplicationUserId == currentUser.Id).Single();
+
+            Company company = db.Companies.Find(emp.CompanyId);
+
+            var eSList = new List<EmployeeSkill>();
+
+            if (ModelState.IsValid)
+            {
+                foreach (var skill in skillIds)
+                {
+                    var result = db.EmployeesSkills.Include(e => e.Employee).Include(e => e.Skill)
+                   .Where(x => x.SkillId == skill).ToList();
+                    eSList.AddRange(result);
+                }
+            }
+            return View(eSList);
+        }
     }
 }

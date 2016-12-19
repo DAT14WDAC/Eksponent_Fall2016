@@ -12,13 +12,11 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Eksponent_Fall2016.Controllers
 {
-   // [Authorize(Roles = "Admin")]
     public class SkillsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Skills
-        [Authorize(Roles = "Admin, Employee")]
         public ActionResult Index()
         {
             //Fetching UserManager
@@ -30,7 +28,6 @@ namespace Eksponent_Fall2016.Controllers
             var skills = db.Skills.Include(s => s.Company).Where(x => x.CompanyId == company.CompanyId);
             return View(skills.ToList());
         }
-     //   [Authorize(Roles = "Employee")]
         public ActionResult EmployeeSkills(int? id)
         {
        
@@ -141,6 +138,7 @@ namespace Eksponent_Fall2016.Controllers
         }
 
         // GET: Skills/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -156,6 +154,7 @@ namespace Eksponent_Fall2016.Controllers
         }
 
         // POST: Skills/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

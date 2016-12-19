@@ -9,10 +9,8 @@
 <div class="container">
     <div class="col-md-3 hidden-sm hidden-xs">
         <div>
-
             <img src="@Model.Profileimage" alt="Profile image" class="profileImage thumbnail img-responsive">
         </div>
-
     </div>
     <div class="col-md-9" style="margin-top:30px;">
         <div class="row">
@@ -36,15 +34,10 @@
                     @Html.DisplayFor(model => model.Lastname)
                 </dd>
                 <dt>
-                    My Skill focus:
+                    My Skill focus
                 </dt>
                 <dd>
                     <table class="table">
-                        @*<tr>
-                            <th>
-                                Skill Name
-                            </th>
-                        </tr>*@
                         @foreach (var skill in Model.ISkillFocus)
                         {
                             <tr>
@@ -55,18 +48,15 @@
                         }
                     </table>
                 </dd>
-
-</dl>
+            </dl>
         </div>
     </div>
     
 </div>
-<div style="margin-left:30px;">
+<div style="margin-left: 30px;">
     @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
     @Html.ActionLink("Delete", "Delete", new { id = Model.EmployeeId })
 </div>
-
-
 
 
 
