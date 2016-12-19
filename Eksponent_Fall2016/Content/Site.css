@@ -42,10 +42,12 @@ textarea {
     max-width: 280px;
 }
 #GetEmployee{
+    border-radius: 25px;
     background-color:white;
     padding-bottom:70px;
 }
 #companyContainer{
+    border-radius: 25px;
     margin-top:10px;
     background-color:white;
     width:auto;
@@ -86,6 +88,8 @@ textarea {
     padding-bottom:5px;
     width:253px;
     height:234px;
+    margin-top:30px;
+    margin-bottom:15px;
 
 
 }
@@ -95,6 +99,9 @@ textarea {
 
     table#t01 tr:nth-child(odd) {
        background-color: #fff;
+    }
+    table#t02 th{
+      background-color: #fff;
     }
     /*table#t01, th, td {
         border: 1px solid black;
@@ -108,5 +115,5 @@ textarea {
      background-color: #78909C;
      color: white;
     } 
-
+   
 

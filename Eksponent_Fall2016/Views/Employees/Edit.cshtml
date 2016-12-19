@@ -8,11 +8,11 @@
 <hr />
 <div class="container">
     <div class="row">
-        <div class="col-md-4 hidden-sm hidden-xs">
+        <div class="col-md-3 hidden-sm hidden-xs">
             <img src="@Model.Profileimage" alt="Profile image" class="profileImage thumbnail img-responsive">
 
         </div>
-        <div class="col-md-8" style="margin-top:40px;">
+        <div class="col-md-9" style="margin-top:30px;">
             @using(Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
@@ -46,13 +46,16 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
+                        @Html.LabelFor(model => model.Profileimage, "Profile Image", htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input name="image" type="file" />
+                            @Html.ValidationMessageFor(model => model.Profileimage)
                         </div>
                     </div>
                     <div class="form-group">
-                        <input name="image" type="file" />
-                        @Html.ValidationMessageFor(model => model.Company)
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                        </div>
                     </div>
                 </div>
             }

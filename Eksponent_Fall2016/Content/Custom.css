@@ -6,4 +6,9 @@
     cursor: pointer;
     color:coral;
 }
+.clip-svg{
+       position: absolute;
+       right: 0;
+   }
+
  
