@@ -12,6 +12,7 @@ namespace Eksponent_Fall2016.Models
         public int SkillFocusId { get; set; }
         public int EmployeeId { get; set; }
         public int SkillId { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Startdate { get; set; }
         public DateTime Enddate { get; set; }
 

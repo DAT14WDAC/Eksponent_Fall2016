@@ -8,11 +8,11 @@
 <hr />
 <div class="container">
     <div class="row">
-        <div class="col-md-4 hidden-sm hidden-xs">
+        <div class="col-md-3 hidden-sm hidden-xs">
             <img src="@Model.CompanyLogo" alt="Profile image" class="CompanyLogo thumbnail img-responsive">
         </div>
 
-        <div class="col-md-8" style="margin-top:40px;">
+        <div class="col-md-9" style="margin-top:40px;">
             @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
